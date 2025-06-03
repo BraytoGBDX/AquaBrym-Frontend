@@ -1,12 +1,117 @@
-# React + Vite
+# 💧 Aquabrym Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Aquabrym** es una aplicación web enfocada en **monitorear el consumo de agua** en tiempo real, ya sea en hogares o instituciones.
+ Esta interfaz web se conecta con sensores físicos mediante circuitos **Arduino**, permitiendo a los usuarios 
+ visualizar datos y recibir recomendaciones para reducir el gasto de agua y ahorrar dinero mensualmente.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Inicialización del proyecto (con pnpm)
 
-## Expanding the ESLint configuration
+### ✅ Requisitos previos
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [Node.js](https://nodejs.org/) v18 o superior
+- [`pnpm`](https://pnpm.io/) instalado globalmente
+
+Instalación de `pnpm`:
+
+```bash
+npm install -g pnpm
+```
+
+---
+
+### 📥 Clonar y preparar el proyecto
+
+```bash
+git clone https://github.com/tu-usuario/aquabrym-frontend.git
+cd aquabrym-frontend
+pnpm install
+```
+
+---
+
+### 🧪 Ejecutar en modo desarrollo
+
+```bash
+pnpm run dev
+```
+
+Esto abrirá la app en tu navegador en `http://localhost:5173` (por defecto).
+
+---
+
+### 🏗️ Compilar para producción
+
+```bash
+pnpm run build
+```
+
+Los archivos optimizados se generarán en la carpeta `dist/`.
+
+---
+
+### ⚙️ Estructura del proyecto
+
+```plaintext
+aquabrym-frontend/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── App.jsx
+│   └── main.jsx
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+---
+
+## 📖 Descripción del Proyecto
+
+Aquabrym combina tecnologías web modernas con hardware físico para crear una solución completa de ahorro de agua.
+
+### 🛠️ ¿Cómo funciona?
+
+- 🔧 Los sensores conectados a **Arduino** miden el flujo de agua.
+- 🌐 Estos datos se envían a un servidor backend (no incluido aquí).
+- 📊 La app frontend muestra la información en **tiempo real**.
+- 💡 Se generan consejos automáticos para **reducir el consumo** y el gasto.
+
+### 🎯 Beneficios clave
+
+- Monitoreo en tiempo real del consumo de agua
+- Mejora de hábitos de consumo
+- Reducción de facturas mensuales
+- Contribución al cuidado del medio ambiente
+
+---
+
+## 🧰 Tecnologías utilizadas
+
+| Tecnología     | Descripción                                       |
+|----------------|---------------------------------------------------|
+| ⚛️ React        | Librería para construir interfaces de usuario     |
+| ⚡ Vite         | Entorno de desarrollo rápido                      |
+| 📦 pnpm         | Gestor de paquetes rápido y eficiente             |
+| 📈 Charts       | Para visualización de consumo (gráficas)          |
+| 🧠 Arduino      | Hardware que captura los datos del consumo        |
+
+---
+
+## 📌 Futuras mejoras
+
+- [ ] Integración completa con backend vía WebSocket
+- [ ] Autenticación de usuarios
+- [ ] Visualización histórica por día/mes
+- [ ] App móvil (PWA)
+
+---
+
+## 🧑‍💻 Autor
+
+Desarrollado por **AquaBrym**  
+📬 Contacto: [lculpa34gmail.com]
+
+---
