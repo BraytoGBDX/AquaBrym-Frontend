@@ -10,10 +10,12 @@ import tubo from '../../assets/tubo.png'
 import cerro from '../../assets/cerro.png'
 import ticket from '../../assets/ticket.png'
 import aspersor from '../../assets/aspersor.png'
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="home-container">
       <header className="navbar">
@@ -26,8 +28,8 @@ export default function Home() {
           <a href="#">Contacto</a>
         </nav>
         <div className="actions">
-          <button className="btn login">Inicia Sesión</button>
-          <button className="btn register">Regístrate</button>
+          <button className="btn login" onClick={() => navigate('/login')}>Inicia Sesión</button>
+          <button className="btn register" onClick={() => navigate('/register')}>Regístrate</button>
         </div>
       </header>
 
