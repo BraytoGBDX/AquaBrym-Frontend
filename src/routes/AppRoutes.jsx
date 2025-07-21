@@ -26,6 +26,7 @@ function AppRoutes() {
       />
 
       <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Home />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/user" element={<UserDashboard />} />
     </Routes>

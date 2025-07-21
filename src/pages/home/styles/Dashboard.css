@@ -1,0 +1,322 @@
+/* src/pages/Home/Home.css */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+}
+
+.logo img {
+  height: 40px;
+}
+
+nav a {
+  margin: 0 2rem;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  margin-left: 5rem;
+}
+
+nav a.active {
+  color: #000;
+  font-weight: bold;
+}
+
+.actions .btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn.login {
+  background-color: #1f65ff;
+  color: white;
+}
+
+.btn.register {
+  background-color: transparent;
+  color: #1f65ff;
+  border: 2px solid #1f65ff;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3rem;
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+.text {
+  flex: 1;
+}
+
+.text h1 {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+}
+
+.text .highlight {
+  color: #1f65ff;
+  font-weight: 800;
+}
+
+.text p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+}
+
+.image {
+  flex: 1;
+}
+
+.image img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+
+.hero-container {
+  text-align: center;
+  padding: 3rem 0;
+  width: 100%;
+
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.highlight {
+  color: #1f65ff;
+  font-weight: bold;
+}
+
+.hero-text p {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.hero-image img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin: 2rem 0;
+}
+
+.objective {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.icon-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.icon-title .icon {
+  width: 32px;
+  height: 32px;
+}
+
+.objective h2 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.description {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.como-container {
+  text-align: center;
+  background-color: #fff;
+}
+
+.como-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.pasos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.paso {
+  flex: 1;
+  max-width: 300px;
+  min-width: 250px;
+  text-align: center;
+}
+
+.numero {
+  background-color: #eee;
+  color: #333;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.paso p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.paso img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.impacto-container {
+  padding: 2rem 2rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+.impacto-title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.impacto-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 3rem;
+}
+
+.impacto-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.impacto-card {
+  text-align: left;
+}
+
+.impacto-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.impacto-card h3 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.impacto-card p {
+  font-size: 1.2rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.mensaje-final {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem 8rem;
+  background-color: #fff;
+  justify-content: space-between;
+}
+
+.mensaje-izquierda {
+  flex: 1;
+  min-width: 250px;
+}
+
+.mensaje-izquierda h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.mensaje-derecha {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mensaje-derecha p {
+  font-size: 1.3rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.footer {
+  background-color: #1f65ff;
+  color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left h2 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.footer-left p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.footer-center p {
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+  text-align: center;
+}
+
+.footer-right a {
+  margin-left: 1rem;
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+
