@@ -1,7 +1,7 @@
-import '../home/styles/Register.css';
+import './styles/Register.css';
 import logo from '../../assets/logo.png';
 import registerImg from '../../assets/registro.png';
-import googleIcon from '../../assets/google.png'; // Importa la imagen de Google
+import googleIcon from '../../assets/google.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
@@ -20,7 +20,7 @@ export default function Register() {
             </div>
             <h2>Register</h2>
             <p className="register-subtitle">
-              Lorem ipsum is simply dummy text of the printing and typesetting industry.
+              Obtén acceso exclusivo, guarda tu progreso y más. ¡Regístrate gratis!
             </p>
             <form>
               <input className="register-input" type="text" placeholder="Name" />

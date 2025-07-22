@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import loginImg from '../../assets/iniciar sesion.png'; 
 import logo from '../../assets/logo.png';
 import googleIcon from '../../assets/google.png';
-import '../home/styles/Register.css'; 
+import './styles/Login.css';
 
 function Login() {
   const navigate = useNavigate();
@@ -18,23 +18,23 @@ function Login() {
   };
 
   return (
-    <div className="register-bg">
-      <div className="register-card">
-        <div className="register-img-side">
-          <img src={loginImg} alt="Login" className="register-illustration" />
+    <div className="login-bg">
+      <div className="login-card">
+        <div className="login-img-side">
+          <img src={loginImg} alt="Login" className="login-illustration" />
         </div>
-        <div className="register-form-side">
-          <div className="register-form-box">
-            <div className="register-logo">
+        <div className="login-form-side">
+          <div className="login-form-box">
+            <div className="login-logo">
               <img src={logo} alt="Logo" style={{ width: 48, height: 48 }} />
             </div>
             <h2>Hello Again!</h2>
-            <p className="register-subtitle">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            <p className="login-subtitle">
+              Tu espacio personal comienza aquí. Inicia sesión para acceder a tus herramientas.
             </p>
             <form onSubmit={e => { e.preventDefault(); handleLogin("user"); }}>
               <input
-                className="register-input"
+                className="login-input"
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -42,7 +42,7 @@ function Login() {
                 required
               />
               <input
-                className="register-input"
+                className="login-input"
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -55,17 +55,17 @@ function Login() {
                 </label>
                 <a href="#" style={{ fontSize: 14, color: '#2d5bff', textDecoration: 'none' }}>Recovery Password</a>
               </div>
-              <button className="register-accept-btn" type="submit">Login</button>
+              <button className="login-accept-btn" type="submit">Login</button>
             </form>
-            <button className="register-google-btn" type="button" style={{ marginBottom: 16 }}>
-              <img src={googleIcon} alt="Google" className="register-google-icon" />
+            <button className="login-google-btn" type="button" style={{ marginBottom: 16 }}>
+              <img src={googleIcon} alt="Google" className="login-google-icon" />
               Sign in with Google
             </button>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 8 }}>
-              <button className="register-accept-btn" style={{ width: 'auto', padding: '8px 16px', background: '#888' }} onClick={() => handleLogin("user")}>Entrar como Usuario</button>
-              <button className="register-accept-btn" style={{ width: 'auto', padding: '8px 16px', background: '#2d5bff' }} onClick={() => handleLogin("admin")}>Entrar como Admin</button>
+              <button className="login-accept-btn" style={{ width: 'auto', padding: '8px 16px', background: '#888' }} onClick={() => handleLogin("user")}>Entrar como Usuario</button>
+              <button className="login-accept-btn" style={{ width: 'auto', padding: '8px 16px', background: '#2d5bff' }} onClick={() => handleLogin("admin")}>Entrar como Admin</button>
             </div>
-            <div className="register-login-link" style={{ marginTop: 16 }}>
+            <div className="login-login-link" style={{ marginTop: 16 }}>
               Don't have an account yet? <a href="/register">Sign Up</a>
             </div>
           </div>

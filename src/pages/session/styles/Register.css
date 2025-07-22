@@ -1,0 +1,144 @@
+.register-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e0eaff, #ffffff);
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.register-card {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 720px;
+  width: 95%;
+  height: auto;
+}
+
+.register-img-side {
+  flex: 1;
+  background-color: #b6c6f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.register-illustration {
+  width: 100%;
+  max-width: 280px;
+  object-fit: contain;
+}
+
+.register-form-side {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-form-box {
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+}
+
+.register-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.register-form-box h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.register-subtitle {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.register-input {
+  width: 90%;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.register-input:focus {
+  border-color: #2d5bff;
+}
+
+.register-accept-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #2d5bff;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.register-accept-btn:hover {
+  background-color: #1a3bb3;
+}
+
+.register-google-btn {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.register-google-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.register-login-link {
+  font-size: 13px;
+  text-align: center;
+  color: #888;
+  margin-top: 10px;
+}
+
+.register-login-link a {
+  color: #2d5bff;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.register-login-link a:hover {
+  text-decoration: underline;
+}
+
