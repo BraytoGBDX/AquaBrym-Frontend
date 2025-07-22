@@ -1,0 +1,187 @@
+/* Layout principal */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f8fa;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #f0f0f0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #ddd;
+}
+
+.logo-container {
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.menu-item:hover {
+  background-color: #dbe4ff;
+}
+
+.menu-item.active {
+  background-color: #2d5bff;
+  color: white;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Barra superior */
+.topbar {
+  background: white;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.top-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.top-link {
+  color: #333;
+  cursor: pointer;
+}
+
+.top-link:hover {
+  text-decoration: underline;
+}
+
+.logout-btn {
+  padding: 6px 12px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-bar input {
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+/* Grid principal */
+.content-grid {
+  display: flex;
+  padding: 24px;
+  gap: 24px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Gráfico principal */
+.main-chart {
+  flex: 2;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.chart-description {
+  font-size: 14px;
+  color: #555;
+  margin-top: 12px;
+}
+
+/* Tarjetas laterales */
+.side-cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+}
+
+.btn-blue {
+  background-color: #2d5bff;
+  color: white;
+}
+
+.btn-blue:hover {
+  background-color: #1a46e2;
+}
+
+.card.yellow {
+  border-left: 4px solid #ffc107;
+}
+
+.btn-yellow {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-yellow:hover {
+  background-color: #e0a800;
+}
