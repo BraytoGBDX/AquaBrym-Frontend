@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import UserForm from '../../components/UserForm';
+import EntityForm from '../../components/EntityForm';
+import SensorForm from '../../components/SensorForm'; // Importa el formulario de sensores
 import './styles/Dashboard.css';
 import Table from '../../components/Table';
 import {
@@ -86,6 +89,54 @@ const columnsMap = {
 
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState('Dashboard');
+  const [showForm, setShowForm] = useState(false);
+  const [users, setUsers] = useState(dataMap.Users);
+
+  const [entities, setEntities] = useState(dataMap.Entities);
+  const [showEntityForm, setShowEntityForm] = useState(false);
+
+  const [sensors, setSensors] = useState(dataMap.Sensors);
+  const [showSensorForm, setShowSensorForm] = useState(false);
+
+  function handleCreateUser(data) {
+    setUsers([
+      ...users,
+      {
+        id: users.length + 1,
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        role: data.role
+      }
+    ]);
+    setShowForm(false);
+  }
+
+  function handleCreateEntity(data) {
+    setEntities([
+      ...entities,
+      {
+        id: entities.length + 1,
+        name: data.name,
+        address: data.address,
+        entity_type: data.entity_type
+      }
+    ]);
+    setShowEntityForm(false);
+  }
+
+  function handleCreateSensor(data) {
+    setSensors([
+      ...sensors,
+      {
+        id: sensors.length + 1,
+        sensor_type: data.sensor_type,
+        model: data.model,
+        status: data.status
+      }
+    ]);
+    setShowSensorForm(false);
+  }
 
   return (
     <div className="dashboard-container">
@@ -139,6 +190,111 @@ function AdminDashboard() {
                 <div className="chart-description">
                   Gráfico de barras que muestra el consumo comparado entre semanas.
                 </div>
+              </>
+            ) : activeSection === 'Entities' ? (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                  <h2>Entidades</h2>
+                  <button
+                    className="btn btn-blue"
+                    style={{ padding: '8px 16px', borderRadius: 8, background: '#2d5bff', color: '#fff', border: 'none', cursor: 'pointer' }}
+                    onClick={() => setShowEntityForm(true)}
+                  >
+                    Crear Entidad
+                  </button>
+                </div>
+                <Table
+                  title={activeSection}
+                  columns={columnsMap[activeSection]}
+                  data={entities}
+                />
+                {showEntityForm && (
+                  <div style={{
+                    position: 'fixed',
+                    top: 0, left: 0, width: '100vw', height: '100vh',
+                    background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+                  }}>
+                    <div style={{ background: '#fff', padding: 32, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.15)', minWidth: 400 }}>
+                      <EntityForm onSubmit={handleCreateEntity} />
+                      <button
+                        style={{ marginTop: 16, width: '100%', padding: '8px', borderRadius: 8, background: '#888', color: '#fff', border: 'none', cursor: 'pointer' }}
+                        onClick={() => setShowEntityForm(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : activeSection === 'Sensors' ? (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                  <h2>Sensores</h2>
+                  <button
+                    className="btn btn-blue"
+                    style={{ padding: '8px 16px', borderRadius: 8, background: '#2d5bff', color: '#fff', border: 'none', cursor: 'pointer' }}
+                    onClick={() => setShowSensorForm(true)}
+                  >
+                    Crear Sensor
+                  </button>
+                </div>
+                <Table
+                  title={activeSection}
+                  columns={columnsMap[activeSection]}
+                  data={sensors}
+                />
+                {showSensorForm && (
+                  <div style={{
+                    position: 'fixed',
+                    top: 0, left: 0, width: '100vw', height: '100vh',
+                    background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+                  }}>
+                    <div style={{ background: '#fff', padding: 32, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.15)', minWidth: 400 }}>
+                      <SensorForm onSubmit={handleCreateSensor} />
+                      <button
+                        style={{ marginTop: 16, width: '100%', padding: '8px', borderRadius: 8, background: '#888', color: '#fff', border: 'none', cursor: 'pointer' }}
+                        onClick={() => setShowSensorForm(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : activeSection === 'Users' ? (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                  <h2>Usuarios</h2>
+                  <button
+                    className="btn btn-blue"
+                    style={{ padding: '8px 16px', borderRadius: 8, background: '#2d5bff', color: '#fff', border: 'none', cursor: 'pointer' }}
+                    onClick={() => setShowForm(true)}
+                  >
+                    Crear Usuario
+                  </button>
+                </div>
+                <Table
+                  title={activeSection}
+                  columns={columnsMap[activeSection]}
+                  data={users}
+                />
+                {showForm && (
+                  <div style={{
+                    position: 'fixed',
+                    top: 0, left: 0, width: '100vw', height: '100vh',
+                    background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+                  }}>
+                    <div style={{ background: '#fff', padding: 32, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.15)', minWidth: 400 }}>
+                      <UserForm onSubmit={handleCreateUser} />
+                      <button
+                        style={{ marginTop: 16, width: '100%', padding: '8px', borderRadius: 8, background: '#888', color: '#fff', border: 'none', cursor: 'pointer' }}
+                        onClick={() => setShowForm(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
               </>
             ) : (
               <Table
