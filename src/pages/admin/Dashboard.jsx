@@ -49,31 +49,48 @@ const dataMap = {
 };
 
 const columnsMap = {
-  Bills: [
-    { header: 'ID', accessor: 'id' },
-    { header: 'Periodo', accessor: row => `${row.period_start} a ${row.period_end}` },
-    { header: 'Consumo (m³)', accessor: 'consumption_m3' },
-    { header: 'Monto ($)', accessor: 'amount_due' },
-    { header: 'Estado', accessor: 'status' }
-  ],
-  Entities: [
-    { header: 'ID', accessor: 'id' },
-    { header: 'Nombre', accessor: 'name' },
-    { header: 'Dirección', accessor: 'address' },
-    { header: 'Tipo', accessor: 'entity_type' }
-  ],
-  Sensors: [
-    { header: 'ID', accessor: 'id' },
-    { header: 'Tipo', accessor: 'sensor_type' },
-    { header: 'Modelo', accessor: 'model' },
-    { header: 'Estado', accessor: 'status' }
-  ],
-  'Sensor Readings': [
-    { header: 'ID', accessor: 'id' },
-    { header: 'Fecha', accessor: 'timestamp' },
-    { header: 'Volumen (L)', accessor: 'volume_liters' },
-    { header: 'Flujo (LPM)', accessor: 'flow_rate_lpm' }
-  ],
+Bills: [
+  { header: 'ID', accessor: 'id' },
+  { header: 'Periodo', accessor: row => `${row.period_start} a ${row.period_end}` },
+  { header: 'Consumo (m³)', accessor: 'consumption_m3' },
+  { header: 'Tarifa por m³', accessor: 'rate_per_m3' },
+  { header: 'Cargo fijo', accessor: 'fixed_charge' },
+  { header: 'Monto ($)', accessor: 'amount_due' },
+  { header: 'Emitido', accessor: 'issued_at' },
+  { header: 'Vence', accessor: 'due_date' },
+  { header: 'Estado', accessor: 'status' },
+  { header: 'Entidad ID', accessor: 'entityId' },
+  { header: 'Creado', accessor: 'created_at' },
+  { header: 'Actualizado', accessor: 'updated_at' }
+],
+Entities: [
+  { header: 'ID', accessor: 'id' },
+  { header: 'Nombre', accessor: 'name' },
+  { header: 'Dirección', accessor: 'address' },
+  { header: 'Tipo', accessor: 'entity_type' },
+  { header: 'Usuario', accessor: 'userId' },
+  { header: 'Creado', accessor: 'created_at' },
+  { header: 'Actualizado', accessor: 'updated_at' }
+],
+Sensors: [
+  { header: 'ID', accessor: 'id' },
+  { header: 'Tipo', accessor: 'sensor_type' },
+  { header: 'Modelo', accessor: 'model' },
+  { header: 'Instalación', accessor: 'installation_at' },
+  { header: 'Estado', accessor: 'status' },
+  { header: 'Entidad', accessor: 'entityId' },
+  { header: 'Creado', accessor: 'created_at' },
+  { header: 'Actualizado', accessor: 'updated_at' }
+],
+'Sensor Readings': [
+  { header: 'ID', accessor: 'id' },
+  { header: 'Fecha', accessor: 'timestamp' },
+  { header: 'Pulsos', accessor: 'pulses' },
+  { header: 'Flujo (LPM)', accessor: 'flow_rate_lpm' },
+  { header: 'Volumen (L)', accessor: 'volume_liters' },
+  { header: 'Sensor ID', accessor: 'sensorId' },
+  { header: 'Creado', accessor: 'created_at' }
+],
   Users: [
     { header: 'ID', accessor: 'id' },
     { header: 'Email', accessor: 'email' },
