@@ -66,7 +66,26 @@ const columnsMap = {
     { header: 'ID', accessor: 'id' },
     { header: 'Tipo', accessor: 'sensor_type' },
     { header: 'Modelo', accessor: 'model' },
-    { header: 'Estado', accessor: 'status' }
+    { header: 'Estado', accessor: 'status' },
+    {
+      header: 'Acciones',
+      accessor: (row, { onEdit, onDelete }) => (
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            onClick={() => onEdit(row)}
+            style={{ background: 'none', border: 'none', color: '#2d5bff', cursor: 'pointer' }}
+          >
+            Editar
+          </button>
+          <button
+            onClick={() => onDelete(row)}
+            style={{ background: 'none', border: 'none', color: '#e74c3c', cursor: 'pointer' }}
+          >
+            Eliminar
+          </button>
+        </div>
+      )
+    }
   ],
   'Sensor Readings': [
     { header: 'ID', accessor: 'id' },
@@ -97,6 +116,9 @@ function AdminDashboard() {
 
   const [sensors, setSensors] = useState(dataMap.Sensors);
   const [showSensorForm, setShowSensorForm] = useState(false);
+  const [sensorToDelete, setSensorToDelete] = useState(null);
+
+  const [sensorToEdit, setSensorToEdit] = useState(null);
 
   function handleCreateUser(data) {
     setUsers([
@@ -136,6 +158,31 @@ function AdminDashboard() {
       }
     ]);
     setShowSensorForm(false);
+  }
+
+  function handleDeleteSensorConfirmed() {
+    setSensors(sensors.filter(s => s.id !== sensorToDelete.id));
+    setSensorToDelete(null);
+  }
+
+  function handleSaveSensor(data) {
+    if (sensorToEdit) {
+      // Editar: actualiza el sensor en el array
+      setSensors(sensors.map(s => s.id === data.id ? data : s));
+    } else {
+      // Crear: agrega un nuevo sensor
+      setSensors([
+        ...sensors,
+        {
+          id: sensors.length > 0 ? Math.max(...sensors.map(s => s.id)) + 1 : 1,
+          sensor_type: data.sensor_type,
+          model: data.model,
+          status: data.status
+        }
+      ]);
+    }
+    setShowSensorForm(false);
+    setSensorToEdit(null);
   }
 
   return (
@@ -242,23 +289,23 @@ function AdminDashboard() {
                   title={activeSection}
                   columns={columnsMap[activeSection]}
                   data={sensors}
+                  actions={{
+                    onEdit: (row) => {
+                      setSensorToEdit(row);
+                      setShowSensorForm(true);
+                    },
+                    onDelete: (row) => setSensorToDelete(row)
+                  }}
                 />
                 {showSensorForm && (
-                  <div style={{
-                    position: 'fixed',
-                    top: 0, left: 0, width: '100vw', height: '100vh',
-                    background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
-                  }}>
-                    <div style={{ background: '#fff', padding: 32, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.15)', minWidth: 400 }}>
-                      <SensorForm onSubmit={handleCreateSensor} />
-                      <button
-                        style={{ marginTop: 16, width: '100%', padding: '8px', borderRadius: 8, background: '#888', color: '#fff', border: 'none', cursor: 'pointer' }}
-                        onClick={() => setShowSensorForm(false)}
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </div>
+                  <SensorForm
+                    sensor={sensorToEdit}
+                    onClose={() => {
+                      setShowSensorForm(false);
+                      setSensorToEdit(null);
+                    }}
+                    onSubmit={handleSaveSensor}
+                  />
                 )}
               </>
             ) : activeSection === 'Users' ? (
@@ -319,6 +366,34 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {sensorToDelete && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000
+        }}>
+          <div style={{
+            background: '#fff6f7', border: '2px solid #2196f3', borderRadius: 18, padding: 40, minWidth: 350,
+            display: 'flex', flexDirection: 'column', alignItems: 'center'
+          }}>
+            <h2 style={{ fontSize: 36, marginBottom: 24 }}>ELIMINAR</h2>
+            <div style={{ display: 'flex', gap: 40, marginBottom: 12 }}>
+              <button
+                style={{
+                  width: 60, height: 60, borderRadius: '50%', background: '#2ecc40', border: 'none', fontSize: 32, color: '#fff', cursor: 'pointer'
+                }}
+                onClick={handleDeleteSensorConfirmed}
+              >✔</button>
+              <button
+                style={{
+                  width: 60, height: 60, borderRadius: '50%', background: '#e74c3c', border: 'none', fontSize: 32, color: '#fff', cursor: 'pointer'
+                }}
+                onClick={() => setSensorToDelete(null)}
+              >✖</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
