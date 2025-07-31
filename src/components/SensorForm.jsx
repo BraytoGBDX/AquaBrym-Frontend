@@ -43,7 +43,7 @@ const SensorForm = ({ sensor, onClose, onSubmit }) => {
 
   return (
     <form className="sensorform-modal" onSubmit={handleSubmit}>
-      <h2 className="sensorform-title">Crear Sensor</h2>
+      <h2 className="sensorform-title">{sensor ? 'Editar Sensor' : 'Crear Sensor'}</h2>
       <label className="sensorform-label">Tipo</label>
       <input
         className="sensorform-input"
