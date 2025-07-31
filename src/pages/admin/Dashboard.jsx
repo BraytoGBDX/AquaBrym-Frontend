@@ -49,6 +49,7 @@ const dataMap = {
 };
 
 const columnsMap = {
+
   Bills: [
     { header: 'ID', accessor: 'id' },
     { header: 'Periodo', accessor: row => `${row.period_start} a ${row.period_end}` },
