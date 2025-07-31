@@ -67,6 +67,9 @@ const columnsMap = {
     { header: 'Tipo', accessor: 'sensor_type' },
     { header: 'Modelo', accessor: 'model' },
     { header: 'Estado', accessor: 'status' },
+    { header: 'Entidad', accessor: 'entityId' },
+    { header: 'Creado', accessor: 'created_at' },
+    { header: 'Actualizado', accessor: 'updated_at' },
     {
       header: 'Acciones',
       accessor: (row, { onEdit, onDelete }) => (
