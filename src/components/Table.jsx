@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/Table.css';
 
-const Table = ({ columns, data, title }) => {
+const Table = ({ columns, data, title, actions }) => { // <--- agrega actions aquí
   return (
     <div className="table-container">
       <div className="table-title">{title}</div>
@@ -14,19 +14,19 @@ const Table = ({ columns, data, title }) => {
           </tr>
         </thead>
         <tbody>
-          {data.length === 0 ? (
-            <tr>
-              <td colSpan={columns.length} style={{ textAlign: 'center' }}>Sin datos</td>
+          {data.map((row, rowIndex) => (
+            <tr key={row.id || rowIndex}>
+              {columns.map((col, colIndex) => {
+                let value;
+                if (typeof col.accessor === 'function') {
+                  value = col.accessor(row, actions); // <--- usa actions aquí
+                } else {
+                  value = row[col.accessor];
+                }
+                return <td key={colIndex}>{value}</td>;
+              })}
             </tr>
-          ) : (
-            data.map((row, i) => (
-              <tr key={i}>
-                {columns.map((col, j) => (
-                  <td key={j}>{row[col.accessor]}</td>
-                ))}
-              </tr>
-            ))
-          )}
+          ))}
         </tbody>
       </table>
     </div>

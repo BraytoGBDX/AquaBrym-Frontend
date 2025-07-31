@@ -1,37 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/SensorForm.css';
 
-export default function SensorForm({ onSubmit }) {
-  const [form, setForm] = useState({
+const SensorForm = ({ sensor, onClose, onSubmit }) => {
+  const [formData, setFormData] = useState({
     sensor_type: '',
     model: '',
     status: 'active'
   });
 
+  // Cuando cambia el sensor, actualiza los campos
+  useEffect(() => {
+    if (sensor) {
+      setFormData({
+        sensor_type: sensor.sensor_type || '',
+        model: sensor.model || '',
+        status: sensor.status || 'active'
+      });
+    } else {
+      setFormData({
+        sensor_type: '',
+        model: '',
+        status: 'active'
+      });
+    }
+  }, [sensor]);
+
   const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form);
-    setForm({
-      sensor_type: '',
-      model: '',
-      status: 'active'
-    });
+    if (sensor) {
+      // Es edición, incluye el id
+      onSubmit({ ...formData, id: sensor.id });
+    } else {
+      // Es creación
+      onSubmit(formData);
+    }
+    onClose();
   };
 
   return (
     <form className="sensorform-modal" onSubmit={handleSubmit}>
-      <h2 className="sensorform-title">Crear Sensor</h2>
+      <h2 className="sensorform-title">{sensor ? 'Editar Sensor' : 'Crear Sensor'}</h2>
       <label className="sensorform-label">Tipo</label>
       <input
         className="sensorform-input"
         type="text"
         name="sensor_type"
         placeholder="Tipo"
-        value={form.sensor_type}
+        value={formData.sensor_type}
         onChange={handleChange}
         required
       />
@@ -41,7 +60,7 @@ export default function SensorForm({ onSubmit }) {
         type="text"
         name="model"
         placeholder="Modelo"
-        value={form.model}
+        value={formData.model}
         onChange={handleChange}
         required
       />
@@ -49,15 +68,18 @@ export default function SensorForm({ onSubmit }) {
       <select
         className="sensorform-select"
         name="status"
-        value={form.status}
+        value={formData.status}
         onChange={handleChange}
       >
         <option value="active">Activo</option>
         <option value="inactive">Inactivo</option>
       </select>
       <button className="sensorform-btn" type="submit">
-        Crear
+        {sensor ? 'Editar' : 'Crear'}
       </button>
     </form>
   );
 }
+
+export default SensorForm;
+

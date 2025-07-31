@@ -49,48 +49,54 @@ const dataMap = {
 };
 
 const columnsMap = {
-Bills: [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Periodo', accessor: row => `${row.period_start} a ${row.period_end}` },
-  { header: 'Consumo (m³)', accessor: 'consumption_m3' },
-  { header: 'Tarifa por m³', accessor: 'rate_per_m3' },
-  { header: 'Cargo fijo', accessor: 'fixed_charge' },
-  { header: 'Monto ($)', accessor: 'amount_due' },
-  { header: 'Emitido', accessor: 'issued_at' },
-  { header: 'Vence', accessor: 'due_date' },
-  { header: 'Estado', accessor: 'status' },
-  { header: 'Entidad ID', accessor: 'entityId' },
-  { header: 'Creado', accessor: 'created_at' },
-  { header: 'Actualizado', accessor: 'updated_at' }
-],
-Entities: [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Nombre', accessor: 'name' },
-  { header: 'Dirección', accessor: 'address' },
-  { header: 'Tipo', accessor: 'entity_type' },
-  { header: 'Usuario', accessor: 'userId' },
-  { header: 'Creado', accessor: 'created_at' },
-  { header: 'Actualizado', accessor: 'updated_at' }
-],
-Sensors: [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Tipo', accessor: 'sensor_type' },
-  { header: 'Modelo', accessor: 'model' },
-  { header: 'Instalación', accessor: 'installation_at' },
-  { header: 'Estado', accessor: 'status' },
-  { header: 'Entidad', accessor: 'entityId' },
-  { header: 'Creado', accessor: 'created_at' },
-  { header: 'Actualizado', accessor: 'updated_at' }
-],
-'Sensor Readings': [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Fecha', accessor: 'timestamp' },
-  { header: 'Pulsos', accessor: 'pulses' },
-  { header: 'Flujo (LPM)', accessor: 'flow_rate_lpm' },
-  { header: 'Volumen (L)', accessor: 'volume_liters' },
-  { header: 'Sensor ID', accessor: 'sensorId' },
-  { header: 'Creado', accessor: 'created_at' }
-],
+
+  Bills: [
+    { header: 'ID', accessor: 'id' },
+    { header: 'Periodo', accessor: row => `${row.period_start} a ${row.period_end}` },
+    { header: 'Consumo (m³)', accessor: 'consumption_m3' },
+    { header: 'Monto ($)', accessor: 'amount_due' },
+    { header: 'Estado', accessor: 'status' }
+  ],
+  Entities: [
+    { header: 'ID', accessor: 'id' },
+    { header: 'Nombre', accessor: 'name' },
+    { header: 'Dirección', accessor: 'address' },
+    { header: 'Tipo', accessor: 'entity_type' }
+  ],
+  Sensors: [
+    { header: 'ID', accessor: 'id' },
+    { header: 'Tipo', accessor: 'sensor_type' },
+    { header: 'Modelo', accessor: 'model' },
+    { header: 'Estado', accessor: 'status' },
+    { header: 'Entidad', accessor: 'entityId' },
+    { header: 'Creado', accessor: 'created_at' },
+    { header: 'Actualizado', accessor: 'updated_at' },
+    {
+      header: 'Acciones',
+      accessor: (row, { onEdit, onDelete }) => (
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            onClick={() => onEdit(row)}
+            style={{ background: 'none', border: 'none', color: '#2d5bff', cursor: 'pointer' }}
+          >
+            Editar
+          </button>
+          <button
+            onClick={() => onDelete(row)}
+            style={{ background: 'none', border: 'none', color: '#e74c3c', cursor: 'pointer' }}
+          >
+            Eliminar
+          </button>
+        </div>
+      )
+    }
+  ],
+  'Sensor Readings': [
+    { header: 'ID', accessor: 'id' },
+    { header: 'Fecha', accessor: 'timestamp' },
+    { header: 'Volumen (L)', accessor: 'volume_liters' },
+    { header: 'Flujo (LPM)', accessor: 'flow_rate_lpm' }
+  ],
   Users: [
     { header: 'ID', accessor: 'id' },
     { header: 'Email', accessor: 'email' },
@@ -114,6 +120,9 @@ function AdminDashboard() {
 
   const [sensors, setSensors] = useState(dataMap.Sensors);
   const [showSensorForm, setShowSensorForm] = useState(false);
+  const [sensorToDelete, setSensorToDelete] = useState(null);
+
+  const [sensorToEdit, setSensorToEdit] = useState(null);
 
   function handleCreateUser(data) {
     setUsers([
@@ -153,6 +162,31 @@ function AdminDashboard() {
       }
     ]);
     setShowSensorForm(false);
+  }
+
+  function handleDeleteSensorConfirmed() {
+    setSensors(sensors.filter(s => s.id !== sensorToDelete.id));
+    setSensorToDelete(null);
+  }
+
+  function handleSaveSensor(data) {
+    if (sensorToEdit) {
+      // Editar: actualiza el sensor en el array
+      setSensors(sensors.map(s => s.id === data.id ? data : s));
+    } else {
+      // Crear: agrega un nuevo sensor
+      setSensors([
+        ...sensors,
+        {
+          id: sensors.length > 0 ? Math.max(...sensors.map(s => s.id)) + 1 : 1,
+          sensor_type: data.sensor_type,
+          model: data.model,
+          status: data.status
+        }
+      ]);
+    }
+    setShowSensorForm(false);
+    setSensorToEdit(null);
   }
 
   return (
@@ -259,6 +293,13 @@ function AdminDashboard() {
                   title={activeSection}
                   columns={columnsMap[activeSection]}
                   data={sensors}
+                  actions={{
+                    onEdit: (row) => {
+                      setSensorToEdit(row);
+                      setShowSensorForm(true);
+                    },
+                    onDelete: (row) => setSensorToDelete(row)
+                  }}
                 />
                 {showSensorForm && (
                   <div style={{
@@ -267,10 +308,20 @@ function AdminDashboard() {
                     background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
                   }}>
                     <div style={{ background: '#fff', padding: 32, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.15)', minWidth: 400 }}>
-                      <SensorForm onSubmit={handleCreateSensor} />
+                      <SensorForm
+                        sensor={sensorToEdit}
+                        onClose={() => {
+                          setShowSensorForm(false);
+                          setSensorToEdit(null);
+                        }}
+                        onSubmit={handleSaveSensor}
+                      />
                       <button
                         style={{ marginTop: 16, width: '100%', padding: '8px', borderRadius: 8, background: '#888', color: '#fff', border: 'none', cursor: 'pointer' }}
-                        onClick={() => setShowSensorForm(false)}
+                        onClick={() => {
+                          setShowSensorForm(false);
+                          setSensorToEdit(null);
+                        }}
                       >
                         Cancelar
                       </button>
@@ -336,6 +387,34 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {sensorToDelete && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+          background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000
+        }}>
+          <div style={{
+            background: '#fff6f7', border: '2px solid #2196f3', borderRadius: 18, padding: 40, minWidth: 350,
+            display: 'flex', flexDirection: 'column', alignItems: 'center'
+          }}>
+            <h2 style={{ fontSize: 36, marginBottom: 24 }}>ELIMINAR</h2>
+            <div style={{ display: 'flex', gap: 40, marginBottom: 12 }}>
+              <button
+                style={{
+                  width: 60, height: 60, borderRadius: '50%', background: '#2ecc40', border: 'none', fontSize: 32, color: '#fff', cursor: 'pointer'
+                }}
+                onClick={handleDeleteSensorConfirmed}
+              >✔</button>
+              <button
+                style={{
+                  width: 60, height: 60, borderRadius: '50%', background: '#e74c3c', border: 'none', fontSize: 32, color: '#fff', cursor: 'pointer'
+                }}
+                onClick={() => setSensorToDelete(null)}
+              >✖</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
