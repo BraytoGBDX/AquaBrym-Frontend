@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './styles/Register.css';
 import logo from '../../assets/logo.png';
 import registerImg from '../../assets/registro.png';
@@ -5,7 +6,47 @@ import googleIcon from '../../assets/google.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
+  const url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
+    const body = {
+      email,
+      password_hash: password,
+      first_name: name,
+      last_name: lastName,
+      role: 'user',
+    };
+
+    try {
+      const response = await fetch(`${url}/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) throw new Error('Error al registrar usuario');
+
+      alert('Registro exitoso');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error en el registro:', error);
+      alert('Hubo un error al registrar');
+    }
+  };
 
   return (
     <div className="register-bg">
@@ -22,12 +63,12 @@ export default function Register() {
             <p className="register-subtitle">
               Obtén acceso exclusivo, guarda tu progreso y más. ¡Regístrate gratis!
             </p>
-            <form>
-              <input className="register-input" type="text" placeholder="Name" />
-              <input className="register-input" type="text" placeholder="Last name" />
-              <input className="register-input" type="email" placeholder="Email" />
-              <input className="register-input" type="password" placeholder="Password" />
-              <input className="register-input" type="password" placeholder="Confirm password" />
+            <form onSubmit={handleRegister}>
+              <input className="register-input" type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+              <input className="register-input" type="text" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} />
+              <input className="register-input" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+              <input className="register-input" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+              <input className="register-input" type="password" placeholder="Confirm password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
               <button className="register-accept-btn" type="submit">Accept</button>
             </form>
             <button className="register-google-btn" type="button">
