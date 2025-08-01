@@ -3,19 +3,44 @@ import { useNavigate } from 'react-router-dom';
 import loginImg from '../../assets/iniciar sesion.png'; 
 import logo from '../../assets/logo.png';
 import googleIcon from '../../assets/google.png';
+import { jwtDecode } from 'jwt-decode';
 import './styles/Login.css';
 
 function Login() {
+  const url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (tipo) => {
-    const token = { tipo };
-    localStorage.setItem("token", JSON.stringify(token));
-    if (tipo === "admin") navigate("/admin");
+  const handleLogin = async (tipo) => {
+  try {
+    const response = await fetch(`${url}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) throw new Error('Error al iniciar sesión');
+
+    const data = await response.json();
+    const token = data.access_token;
+    const payload = jwtDecode(token);
+
+    console.log('Token recibido:', token);
+    console.log(payload)
+
+    localStorage.setItem("token", token);
+
+    if (payload.role === "admin") navigate("/admin");
     else navigate("/user");
-  };
+
+  } catch (error) {
+    console.error('Error en el login:', error);
+  }
+};
+
 
   return (
     <div className="login-bg">
@@ -61,10 +86,6 @@ function Login() {
               <img src={googleIcon} alt="Google" className="login-google-icon" />
               Sign in with Google
             </button>
-            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 8 }}>
-              <button className="login-accept-btn" style={{ width: 'auto', padding: '8px 16px', background: '#888' }} onClick={() => handleLogin("user")}>Entrar como Usuario</button>
-              <button className="login-accept-btn" style={{ width: 'auto', padding: '8px 16px', background: '#2d5bff' }} onClick={() => handleLogin("admin")}>Entrar como Admin</button>
-            </div>
             <div className="login-login-link" style={{ marginTop: 16 }}>
               Don't have an account yet? <a href="/register">Sign Up</a>
             </div>
