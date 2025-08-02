@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import loginImg from '../../assets/iniciar sesion.png'; 
 import logo from '../../assets/logo.png';
@@ -8,11 +8,12 @@ import './styles/Login.css';
 
 function Login() {
   const url = import.meta.env.VITE_API_URL;
+  console.log(url)
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async (tipo) => {
+  const handleLogin = async () => {
   try {
     const response = await fetch(`${url}/auth/login`, {
       method: 'POST',
