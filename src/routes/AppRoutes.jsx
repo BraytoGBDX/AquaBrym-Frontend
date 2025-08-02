@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-
+import { jwtDecode } from 'jwt-decode';
 import Login from '../pages/session/Login';
 import Home from '../pages/home/Dashboard'; 
 import AdminDashboard from '../pages/admin/Dashboard'; 
@@ -7,7 +7,17 @@ import UserDashboard from '../pages/user/Dashboard';
 import Register from '../pages/session/Register';
 
 function AppRoutes() {
-  const token = JSON.parse(localStorage.getItem("token"));
+  // 🔹 Mantengo tu código pero ahora decodifico
+  const tokenStr = localStorage.getItem("token");
+  let token = null;
+
+  if (tokenStr) {
+    try {
+      token = jwtDecode(tokenStr);
+    } catch (error) {
+      console.error("Error al decodificar el token:", error);
+    }
+  }
 
   return (
     <Routes>
