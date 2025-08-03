@@ -389,28 +389,22 @@ function AdminDashboard() {
       </div>
 
       {sensorToDelete && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000
-        }}>
-          <div style={{
-            background: '#fff6f7', border: '2px solid #2196f3', borderRadius: 18, padding: 40, minWidth: 350,
-            display: 'flex', flexDirection: 'column', alignItems: 'center'
-          }}>
-            <h2 style={{ fontSize: 36, marginBottom: 24 }}>ELIMINAR</h2>
-            <div style={{ display: 'flex', gap: 40, marginBottom: 12 }}>
+        <div className="modal-eliminar-overlay">
+          <div className="modal-eliminar-content">
+            <h2 className="modal-eliminar-title">ELIMINAR</h2>
+            <div className="modal-eliminar-actions">
               <button
-                style={{
-                  width: 60, height: 60, borderRadius: '50%', background: '#2ecc40', border: 'none', fontSize: 32, color: '#fff', cursor: 'pointer'
-                }}
+                className="modal-eliminar-btn modal-eliminar-btn-yes"
                 onClick={handleDeleteSensorConfirmed}
-              >✔</button>
+              >
+                ✔
+              </button>
               <button
-                style={{
-                  width: 60, height: 60, borderRadius: '50%', background: '#e74c3c', border: 'none', fontSize: 32, color: '#fff', cursor: 'pointer'
-                }}
+                className="modal-eliminar-btn modal-eliminar-btn-no"
                 onClick={() => setSensorToDelete(null)}
-              >✖</button>
+              >
+                ✖
+              </button>
             </div>
           </div>
         </div>
