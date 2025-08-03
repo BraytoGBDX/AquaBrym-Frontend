@@ -296,3 +296,136 @@
 .modal-eliminar-btn-no {
   background: #e74c3c;
 }
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  margin-top: 36px;
+}
+
+.main-chart {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 30px 28px 28px 28px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.header-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-actions-row .btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #2d5bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.chart-description {
+  margin-top: 18px;
+  font-size: 1.07rem;
+  color: #555;
+  text-align: center;
+}
+
+.modal-eliminar-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-eliminar-content {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-eliminar-content .btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  background: #888;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.side-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.card {
+  background: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(44,61,180,0.05);
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card.yellow {
+  background: #fff8e1;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.12rem;
+  color: #2d5bff;
+}
+
+.card.yellow .card-title {
+  color: #e4b700;
+}
+
+.card-text {
+  color: #424242;
+  font-size: 1rem;
+}
+
+.btn.btn-yellow {
+  background: #e4b700;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.btn.btn-blue {
+  background: #2d5bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 6px;
+}
