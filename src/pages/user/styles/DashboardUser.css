@@ -185,3 +185,75 @@
 .btn-yellow:hover {
   background-color: #e0a800;
 }
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  margin-top: 36px;
+}
+
+.main-chart {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 30px 28px 28px 28px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Header de acciones (título + botón) */
+.header-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-actions-row .btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #2d5bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+/* Overlay modal genérico */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn.btn-cancel {
+  margin-top: 16px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  background: #888;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
