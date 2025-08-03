@@ -185,3 +185,98 @@
 .btn-yellow:hover {
   background-color: #e0a800;
 }
+
+
+/* Modal fondo */
+.dashboard-modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal contenido */
+.dashboard-modal-content {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  min-width: 400px;
+}
+
+/* Modal de eliminar sensor */
+.dashboard-delete-modal {
+  background: #fff6f7;
+  border: 2px solid #2196f3;
+  border-radius: 18px;
+  padding: 40px;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-delete-title {
+  font-size: 36px;
+  margin-bottom: 24px;
+}
+
+.dashboard-delete-actions {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 12px;
+}
+
+.dashboard-delete-btn-green {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #2ecc40;
+  border: none;
+  font-size: 32px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.dashboard-delete-btn-red {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e74c3c;
+  border: none;
+  font-size: 32px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.dashboard-cancel-btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  background: #888;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Encabezado de sección y botón crear */
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.btn.btn-blue {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #2d5bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
