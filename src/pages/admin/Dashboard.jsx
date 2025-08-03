@@ -204,8 +204,8 @@ function AdminDashboard() {
   const toggleSensorSetting = (key) => {
     setSensorSettings((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   function handleCreateUser(data) {
     setUsers([
@@ -308,7 +308,13 @@ function AdminDashboard() {
             <div className="top-link">Solutions</div>
             <div className="top-link">Community</div>
             <div className="top-link">Configuración</div>
-            <div className="top-link">Profile</div>
+            <div
+              className="top-link"
+              onClick={() => setActiveSection("Profile")}
+            >
+              Profile
+            </div>
+
             <div className="logout-btn">Salir</div>
           </div>
           <div className="search-bar">
@@ -600,22 +606,135 @@ function AdminDashboard() {
                         }}
                       >
                         <li
-                          style={{ cursor: "pointer", color: "#2d5bff" }}
+                          style={{
+                            cursor: "pointer",
+                            color: "#000000ff",
+                            padding: "6px 0",
+                            borderRadius: "6px",
+                            transition: "background-color 0.2s",
+                          }}
                           onClick={() => setShowAccountOptions(true)}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#e8efff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor =
+                              "transparent")
+                          }
                         >
                           Opciones de cuenta
                         </li>
-                        <li>Activar/Desactivar Notificaciones</li>
-                        <li>
-                          Cambiar Tema
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oscuro/Claro
-                        </li>
-                        <li>Ajustes de sonido y vibración</li>
-                        <li>Actualizaciones y mantenimiento</li>
-                        <li>Ayuda y soporte</li>
                         <li
-                          style={{ cursor: "pointer", color: "#e74c3c" }}
+                          style={{
+                            cursor: "pointer",
+                            color: "#000000ff",
+                            padding: "6px 0",
+                            borderRadius: "6px",
+                            transition: "background-color 0.2s",
+                          }}
+                          onClick={() => setShowAccountOptions(true)}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#e8efff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor =
+                              "transparent")
+                          }
+                        >
+                          Activar/Desactivar Notificaciones
+                        </li>
+                        <li
+                          style={{
+                            cursor: "pointer",
+                            color: "#000000ff",
+                            padding: "6px 0",
+                            borderRadius: "6px",
+                            transition: "background-color 0.2s",
+                          }}
+                          onClick={() => setShowAccountOptions(true)}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#e8efff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor =
+                              "transparent")
+                          }
+                        >
+                          Cambiar Tema &nbsp;&nbsp;&nbsp;Oscuro/Claro
+                        </li>
+                        <li
+                          style={{
+                            cursor: "pointer",
+                            color: "#000000ff",
+                            padding: "6px 0",
+                            borderRadius: "6px",
+                            transition: "background-color 0.2s",
+                          }}
+                          onClick={() => setShowAccountOptions(true)}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#e8efff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor =
+                              "transparent")
+                          }
+                        >
+                          Ajustes de sonido y vibración
+                        </li>
+                        <li
+                          style={{
+                            cursor: "pointer",
+                            color: "#000000ff",
+                            padding: "6px 0",
+                            borderRadius: "6px",
+                            transition: "background-color 0.2s",
+                          }}
+                          onClick={() => setShowAccountOptions(true)}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#e8efff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor =
+                              "transparent")
+                          }
+                        >
+                          Actualizaciones y mantenimiento
+                        </li>
+                        <li
+                          style={{
+                            cursor: "pointer",
+                            color: "#000000ff",
+                            padding: "6px 0",
+                            borderRadius: "6px",
+                            transition: "background-color 0.2s",
+                          }}
+                          onClick={() => setShowAccountOptions(true)}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#e8efff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor =
+                              "transparent")
+                          }
+                        >
+                          Ayuda y soporte
+                        </li>
+                        <li
+                          style={{
+                            cursor: "pointer",
+                            color: "#000000ff",
+                            padding: "6px 0",
+                            borderRadius: "6px",
+                            transition: "background-color 0.2s",
+                          }}
                           onClick={() => setShowLogoutConfirm(true)}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#e8efff")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor =
+                              "transparent")
+                          }
                         >
                           Cerrar sesión
                         </li>
@@ -838,6 +957,142 @@ function AdminDashboard() {
                   )}
                 </div>
               </>
+            ) : activeSection === "Profile" ? (
+              <div
+                style={{
+                  position: "fixed",
+                  top: 0,
+                  left: 0,
+                  width: "100vw",
+                  height: "100vh",
+                  backgroundColor: "rgba(0, 0, 0, 0.3)",
+                  zIndex: 1000,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0 20px",
+                }}
+              >
+                <div
+                  style={{
+                    background: "#fff",
+                    borderRadius: "20px",
+                    padding: "20px 25px",
+                    width: "100%",
+                    maxWidth: "500px",
+                    boxShadow: "0 0 20px rgba(0,0,0,0.2)",
+                    position: "relative",
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  {/* Botón volver */}
+                  <button
+                    onClick={() => setActiveSection("Dashboard")}
+                    style={{
+                      position: "absolute",
+                      top: 15,
+                      right: 15,
+                      border: "none",
+                      background: "#eee",
+                      padding: "6px 10px",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Volver
+                  </button>
+
+                  {/* Columna izquierda */}
+                  <div style={{ flex: 1, justifyContent: "center", display: "grid"}}>
+                    <div style={{ textAlign: "center", marginBottom: 15 }}>
+                      <div
+                        style={{
+                          fontSize: "48px",
+                          backgroundColor: "#eee",
+                          borderRadius: "50%",
+                          width: 70,
+                          height: 70,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          margin: "0 auto",
+                        }}
+                      >
+                        👤
+                      </div>
+                      <h3 style={{ margin: "10px 0 5px" }}>AquaWatch</h3>
+                      <small>
+                        <strong>Administrador</strong>
+                      </small>
+                    </div>
+                    <p>📧 aquaWhatch@gmail.com</p>
+                    <p>📞 +7461144910</p>
+                    <p>📞 +7641081079</p>
+                    <p>📷 aquaBrym.Whatch</p>
+                    <p>📘 aquaBrym.1</p>
+                  </div>
+
+                  {/* Columna derecha */}
+                  <div style={{ flex: 1, justifyContent: "center", display: "grid"}}>
+                    <div style={{ textAlign: "center", marginBottom: 15 }}>
+                    <div
+                        style={{
+                          fontSize: "48px",
+                          backgroundColor: "#eee",
+                          borderRadius: "50%",
+                          width: 70,
+                          height: 70,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          margin: "0 auto",
+                        }}
+                      >
+                        ⚙️
+                      </div>
+                      <h3 style={{ margin: "10px 0 5px" }}>Preferencias</h3>
+                      </div>
+                    <div style={{ marginBottom: 15 }}>
+                      <label>Idioma</label>
+                      <br />
+                      <select style={{ marginTop: 5 }}>
+                        <option>Español</option>
+                        <option>Inglés</option>
+                      </select>
+                    </div>
+
+                    <div style={{ marginBottom: 15 }}>
+                      <label>Tema</label>
+                      <br />
+                      <label>
+                        <input type="radio" name="tema" /> Claro
+                      </label>
+                      <label style={{ marginLeft: 20 }}>
+                        <input type="radio" name="tema" /> Oscuro
+                      </label>
+                    </div>
+
+                    <div style={{ marginBottom: 15 }}>
+                      <label>Notificaciones</label>
+                      <br />
+                      <label className="switch">
+                        <input type="checkbox" />
+                        <span className="slider round"></span>
+                      </label>
+                    </div>
+
+                    <div>
+                      <label>Sonido de alerta</label>
+                      <br />
+                      <label className="switch">
+                        <input type="checkbox" />
+                        <span className="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ) : (
               <Table
                 title={activeSection}
@@ -863,7 +1118,6 @@ function AdminDashboard() {
           </div>
         </div>
       </div>
-
       {sensorToDelete && (
         <div
           style={{
@@ -930,5 +1184,4 @@ function AdminDashboard() {
     </div>
   );
 }
-
 export default AdminDashboard;

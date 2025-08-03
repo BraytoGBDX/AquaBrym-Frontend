@@ -286,3 +286,41 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
+.config-option:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.profile-section {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 60px;
+  max-width: 900px;
+  margin: 40px auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-link {
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+  user-select: none;
+  text-decoration: none; /* por si se usa como <a> */
+  color: #007bff;
+  text-underline-offset: none;
+}
+
+.top-link:hover {
+  background-color: #2d5bff;
+}
+
+.top-link:active {
+  background-color: #1a46e2;
+  color: white;
+}
+
+
+
