@@ -1,8 +1,6 @@
-# 💧 Aquabrym Frontend
+# 💧 Planteamiento del problema
 
-**Aquabrym** es una aplicación web enfocada en **monitorear el consumo de agua** en tiempo real, ya sea en hogares o instituciones.
- Esta interfaz web se conecta con sensores físicos mediante circuitos **Arduino**, permitiendo a los usuarios 
- visualizar datos y recibir recomendaciones para reducir el gasto de agua y ahorrar dinero mensualmente.
+La escasez de agua es una problemática crítica que afecta a diversas regiones a nivel mundial, impulsada por el cambio climático, el crecimiento poblacional y el uso ineficiente del recurso hídrico. En este contexto, se identificó una necesidad urgente de desarrollar herramientas tecnológicas accesibles que permitan a los usuarios monitorear y gestionar su consumo de agua de manera consciente y eficiente. A través de un diagnóstico del entorno, se evidenció la ausencia de soluciones que brinden visibilidad en tiempo real del uso del recurso, lo que dificulta la adopción de prácticas sostenibles. El proyecto AquaWatch surge como respuesta directa a esta necesidad, con el objetivo general de crear un sistema de monitoreo hídrico inteligente que promueva el uso responsable del agua mediante el análisis de datos. La propuesta se justifica en el potencial de las técnicas de análisis de datos para identificar patrones de consumo, generar alertas en tiempo real y recomendar estrategias personalizadas para la optimización del recurso, contribuyendo además al cumplimiento de los Objetivos de Desarrollo Sostenible (ODS), especialmente el ODS 6: Agua limpia y saneamiento.
 
 ---
 
