@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserForm from "../../components/UserForm";
 import EntityForm from "../../components/EntityForm";
-import SensorForm from "../../components/SensorForm"; // Importa el formulario de sensores
+import SensorForm from "../../components/SensorForm";
 import "./styles/Dashboard.css";
 import Table from "../../components/Table";
 import {
@@ -305,8 +305,6 @@ function AdminDashboard() {
         <div className="topbar">
           <div className="top-links">
             <div className="top-link">Inicio</div>
-            <div className="top-link">Solutions</div>
-            <div className="top-link">Community</div>
             <div className="top-link">Configuración</div>
             <div
               className="top-link"
@@ -577,7 +575,7 @@ function AdminDashboard() {
 
                     <div className="option-card">
                       <h3>Información de contacto</h3>
-                      <p>📧 aquaWhatch@gmail.com</p>
+                      <p>📧 aquaWatch@gmail.com</p>
                       <p>📄 Documentación</p>
                       <p>🎧 Soporte</p>
                     </div>

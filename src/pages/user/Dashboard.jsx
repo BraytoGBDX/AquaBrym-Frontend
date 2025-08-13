@@ -105,6 +105,18 @@ function AdminDashboard() {
 
   const navigate = useNavigate(); // para redireccionar a Home
 
+  const [showAccountOptions, setShowAccountOptions] = useState(false);
+    const [sensorSettings, setSensorSettings] = useState({
+      activar: true,
+      exceso: true,
+      inactividad: true,
+    });
+  
+    const toggleSensorSetting = (key) => {
+      setSensorSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+    };
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
   function handleCreateEntity(data) {
     setEntities([
       ...entities,
@@ -138,7 +150,7 @@ function AdminDashboard() {
           <img src={logo} alt="Logo" className="logo" />
         </div>
         <div className="menu">
-          {['Dashboard', 'Bills', 'Entities', 'Sensors', 'Sensor Readings', 'Alertas'].map((item) => (
+          {['Dashboard', 'Bills', 'Entities', 'Sensors', 'Sensor Readings', 'Alertas', 'Configuración'].map((item) => (
             <div
               key={item}
               className={`menu-item ${activeSection === item ? 'active' : ''}`}
@@ -160,10 +172,13 @@ function AdminDashboard() {
         <div className="topbar">
           <div className="top-links">
             <div className="top-link">Inicio</div>
-            <div className="top-link">Solutions</div>
-            <div className="top-link">Community</div>
-            <div className="top-link">Configuración</div>
-            <div className="top-link">Profile</div>
+            <div className="top-link" >Configuración</div>
+            <div
+              className="top-link"
+              onClick={() => setActiveSection("Profile")}
+            >
+              Perfil
+            </div>
             <div className="logout-btn">Salir</div>
           </div>
           <div className="search-bar">
@@ -230,7 +245,221 @@ function AdminDashboard() {
                   Gráfico de barras que muestra el consumo comparado entre semanas.
                 </div>
               </>
-            ) : (
+            ) : activeSection === "Configuración" ? (
+              <div className="config-section">
+                {!showAccountOptions ? (
+                  <>
+                    <h2>Configuración</h2>
+                    <ul className="config-list">
+                      <li
+                        className="config-option"
+                        onClick={() => setShowAccountOptions(true)}
+                      >
+                        Opciones de cuenta
+                      </li>
+                      <li
+                        className="config-option"
+                        onClick={() => setActiveSection("Profile")}
+                      >
+                        Activar/Desactivar Notificaciones
+                      </li>
+                      <li
+                        className="config-option"
+                        onClick={() => setActiveSection("Profile")}
+                      >
+                        Cambiar Tema &nbsp;&nbsp;&nbsp;Oscuro/Claro
+                      </li>
+                      <li
+                        className="config-option"
+                        onClick={() => setActiveSection("Profile")}
+                      >
+                        Ajustes de sonido y vibración
+                      </li>
+                      <li
+                        className="config-option"
+                        onClick={() => setShowAccountOptions(true)}
+                      >
+                        Actualizaciones y mantenimiento
+                      </li>
+                      <li
+                        className="config-option"
+                        onClick={() => setShowAccountOptions(true)}
+                      >
+                        Ayuda y soporte
+                      </li>
+                      <li
+                        className="config-option"
+                        onClick={() => setShowLogoutConfirm(true)}
+                      >
+                        Cerrar sesión
+                      </li>
+                    </ul>
+
+                    {showLogoutConfirm && (
+                      <div className="logout-confirm-overlay">
+                        <div className="logout-confirm-box">
+                          <h3>¿Seguro que deseas cerrar sesión?</h3>
+                          <div className="logout-confirm-actions">
+                            <button
+                              className="logout-btn-yes"
+                              onClick={() => {
+                                setShowLogoutConfirm(false);
+                                alert("Sesión cerrada");
+                              }}
+                            >
+                              ✔
+                            </button>
+                            <button
+                              className="logout-btn-no"
+                              onClick={() => setShowLogoutConfirm(false)}
+                            >
+                              ✖
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="account-options-grid">
+                    <div className="option-card">
+                      <h3>Sensores</h3>
+                      {["activar", "exceso", "inactividad"].map((key) => {
+                        const labels = {
+                          activar: "Activar sensores",
+                          exceso: "Exceso de consumo",
+                          inactividad: "Inactividad",
+                        };
+                        return (
+                          <div
+                            key={key}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <span>{labels[key]}</span>
+                            <label className="switch">
+                              <input
+                                type="checkbox"
+                                checked={sensorSettings[key]}
+                                onChange={() => toggleSensorSetting(key)}
+                              />
+                              <span className="slider round"></span>
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="option-card centered">
+                      <div className="emoji">👤</div>
+                      <div style={{ fontWeight: "bold" }}>Usuario</div>
+                      <button>Cambiar contraseña</button>
+                    </div>
+
+                    <div className="option-card">
+                      <h3>Información de contacto</h3>
+                      <p>📧 aquaWatch@gmail.com</p>
+                      <p>📄 Documentación</p>
+                      <p>🎧 Soporte</p>
+                    </div>
+
+                    <div className="option-card">
+                      <h3>Información del proyecto</h3>
+                      <p>
+                        <strong>AquaWhatch</strong>
+                      </p>
+                      <p>
+                        Sistema de consumo consciente de agua y alertas en
+                        tiempo real.
+                      </p>
+                      <p>
+                        <strong>Versión:</strong> 1.2
+                      </p>
+                      <p>
+                        <strong>Sitio Web:</strong> 1
+                      </p>
+                      <p>
+                        <strong>Actualización:</strong> 3
+                      </p>
+                    </div>
+
+                    <div className="return-btn-container">
+                      <button onClick={() => setShowAccountOptions(false)}>
+                        Volver
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : activeSection === "Profile" ? (
+              <div className="profile-modal">
+                <div className="profile-modal-content">
+                  <button
+                    onClick={() => setActiveSection("Dashboard")}
+                    className="close-btn"
+                  >
+                    Volver
+                  </button>
+
+                  <div className="profile-col">
+                    <div className="avatar">👤</div>
+                    <h3>Valentina</h3>
+                    <small>
+                    </small>
+                    <p>👤 Cambiar nombre </p>
+                    <p>📧 user@gmail.com</p>
+                    <p>📞 +7461144910</p>
+                  </div>
+
+                  <div className="profile-col">
+                    <div className="settings-icon">⚙️</div>
+                    <h3>Preferencias</h3>
+
+                    <div>
+                      <label>Idioma</label>
+                      <br />
+                      <select>
+                        <option>Español</option>
+                        <option>Inglés</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label>Tema</label>
+                      <br />
+                      <label>
+                        <input type="radio" name="tema" /> Claro
+                      </label>
+                      <label style={{ marginLeft: 20 }}>
+                        <input type="radio" name="tema" /> Oscuro
+                      </label>
+                    </div>
+
+                    <div>
+                      <label>Notificaciones</label>
+                      <br />
+                      <label className="switch">
+                        <input type="checkbox" />
+                        <span className="slider round"></span>
+                      </label>
+                    </div>
+
+                    <div>
+                      <label>Sonido de alerta</label>
+                      <br />
+                      <label className="switch">
+                        <input type="checkbox" />
+                        <span className="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ): (
               <Table title={activeSection} columns={columnsMap[activeSection]} data={dataMap[activeSection]} />
             )}
           </div>

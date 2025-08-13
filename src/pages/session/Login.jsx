@@ -53,7 +53,7 @@ function Login() {
             <div className="login-logo">
               <img src={logo} alt="Logo" style={{ width: 48, height: 48 }} />
             </div>
-            <h2>Hello Again!</h2>
+            <h2>Hola, ¡Bienvenido!</h2>
             <p className="login-subtitle">
               Tu espacio personal comienza aquí. Inicia sesión para acceder a tus herramientas.
             </p>

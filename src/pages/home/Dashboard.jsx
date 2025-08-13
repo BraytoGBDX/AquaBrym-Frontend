@@ -2,7 +2,7 @@ import './styles/Dashboard.css';
 import agua from '../../assets/manos-agua.png'
 import tomando_agua from '../../assets/tomando-agua.png'
 import logo from '../../assets/logo.png'
-import how1 from '../../assets/1.png'
+import how1 from '../../assets/1.jpg'
 import how2 from '../../assets/2.png'
 import how3 from '../../assets/3.png'
 import regar from '../../assets/regando.png'
@@ -54,7 +54,7 @@ export default function Home() {
               <span className="highlight">agua</span><br />
               de calidad
             </h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <p>Por eso, nuestro objetivo es que cada gota cuente, asegurando un consumo eficiente que cuide tanto de tu bienestar como del planeta.</p>
           </section>
 
           <div className="hero-image">
@@ -153,7 +153,7 @@ export default function Home() {
 
           <footer className="footer">
             <div className="footer-left">
-              <h2>AquaBrym</h2>
+              <h2>AquaWatch</h2>
               <p>Sistema de Monitoreo Inteligente del Agua</p>
             </div>
 

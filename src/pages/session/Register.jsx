@@ -59,7 +59,7 @@ export default function Register() {
             <div className="register-logo">
               <img src={logo} alt="Logo" style={{ width: 48, height: 48 }} />
             </div>
-            <h2>Register</h2>
+            <h2>Registro</h2>
             <p className="register-subtitle">
               Obtén acceso exclusivo, guarda tu progreso y más. ¡Regístrate gratis!
             </p>
