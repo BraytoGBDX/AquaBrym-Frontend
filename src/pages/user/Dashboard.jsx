@@ -167,11 +167,34 @@ function AdminDashboard() {
           ))}
         </div>
       </div>
-
+      {showLogoutConfirm && (
+        <div className="logout-confirm-overlay">
+          <div className="logout-confirm-box">
+            <h3>¿Seguro que deseas cerrar sesión?</h3>
+            <div className="logout-confirm-actions">
+              <button
+                className="logout-btn-yes"
+                onClick={() => {
+                  setShowLogoutConfirm(false);
+                  alert("Sesión cerrada");
+                  navigate("/dashboard");
+                }}
+              >
+                ✔
+              </button>
+              <button
+                className="logout-btn-no"
+                onClick={() => setShowLogoutConfirm(false)}
+              >
+                ✖
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="main-content">
         <div className="topbar">
           <div className="top-links">
-            <div className="top-link">Inicio</div>
             <div className="top-link" >Configuración</div>
             <div
               className="top-link"
@@ -179,7 +202,13 @@ function AdminDashboard() {
             >
               Perfil
             </div>
-            <div className="logout-btn">Salir</div>
+            <div
+        className="logout-btn"
+        onClick={() => setShowLogoutConfirm(true)}
+        style={{ cursor: "pointer" }}
+      >
+        Salir
+      </div>
           </div>
           <div className="search-bar">
             <input type="text" placeholder="Buscar" />
@@ -294,31 +323,6 @@ function AdminDashboard() {
                         Cerrar sesión
                       </li>
                     </ul>
-
-                    {showLogoutConfirm && (
-                      <div className="logout-confirm-overlay">
-                        <div className="logout-confirm-box">
-                          <h3>¿Seguro que deseas cerrar sesión?</h3>
-                          <div className="logout-confirm-actions">
-                            <button
-                              className="logout-btn-yes"
-                              onClick={() => {
-                                setShowLogoutConfirm(false);
-                                alert("Sesión cerrada");
-                              }}
-                            >
-                              ✔
-                            </button>
-                            <button
-                              className="logout-btn-no"
-                              onClick={() => setShowLogoutConfirm(false)}
-                            >
-                              ✖
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </>
                 ) : (
                   <div className="account-options-grid">
