@@ -209,6 +209,7 @@ nav a.active {
   padding: 2rem 2rem;
   background-color: #fff;
   text-align: center;
+  
 }
 
 .impacto-title {
@@ -220,6 +221,7 @@ nav a.active {
   font-size: 1rem;
   color: #666;
   margin-bottom: 3rem;
+  text-align: center;
 }
 
 .impacto-grid {
@@ -318,5 +320,3 @@ nav a.active {
   font-size: 1.5rem;
   text-decoration: none;
 }
-
-

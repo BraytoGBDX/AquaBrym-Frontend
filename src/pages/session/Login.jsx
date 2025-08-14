@@ -53,7 +53,7 @@ function Login() {
             <div className="login-logo">
               <img src={logo} alt="Logo" style={{ width: 48, height: 48 }} />
             </div>
-            <h2>Hello Again!</h2>
+            <h2>Hola, ¡Bienvenido!</h2>
             <p className="login-subtitle">
               Tu espacio personal comienza aquí. Inicia sesión para acceder a tus herramientas.
             </p>
@@ -69,25 +69,25 @@ function Login() {
               <input
                 className="login-input"
                 type="password"
-                placeholder="Password"
+                placeholder="Contraseña"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
               />
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
                 <label style={{ fontSize: 14 }}>
-                  <input type="checkbox" style={{ marginRight: 6 }} /> Remember Me
+                  <input type="checkbox" style={{ marginRight: 6 }} /> Recordar datos
                 </label>
-                <a href="#" style={{ fontSize: 14, color: '#2d5bff', textDecoration: 'none' }}>Recovery Password</a>
+                <a href="#" style={{ fontSize: 14, color: '#2d5bff', textDecoration: 'none' }}>Contraseña de recuperación</a>
               </div>
-              <button className="login-accept-btn" type="submit">Login</button>
+              <button className="login-accept-btn" type="submit">Iniciar sesión</button>
             </form>
             <button className="login-google-btn" type="button" style={{ marginBottom: 16 }}>
               <img src={googleIcon} alt="Google" className="login-google-icon" />
-              Sign in with Google
+              Iniciar sesión con Google
             </button>
             <div className="login-login-link" style={{ marginTop: 16 }}>
-              Don't have an account yet? <a href="/register">Sign Up</a>
+              ¿Aún no tienes una cuenta? <a href="/register">Registrate aquí</a>
             </div>
           </div>
         </div>

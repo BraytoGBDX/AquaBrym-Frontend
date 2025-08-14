@@ -59,24 +59,24 @@ export default function Register() {
             <div className="register-logo">
               <img src={logo} alt="Logo" style={{ width: 48, height: 48 }} />
             </div>
-            <h2>Register</h2>
+            <h2>Registro</h2>
             <p className="register-subtitle">
               Obtén acceso exclusivo, guarda tu progreso y más. ¡Regístrate gratis!
             </p>
             <form onSubmit={handleRegister}>
-              <input className="register-input" type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
-              <input className="register-input" type="text" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} />
+              <input className="register-input" type="text" placeholder="Nombre" value={name} onChange={e => setName(e.target.value)} />
+              <input className="register-input" type="text" placeholder="Apellidos" value={lastName} onChange={e => setLastName(e.target.value)} />
               <input className="register-input" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-              <input className="register-input" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-              <input className="register-input" type="password" placeholder="Confirm password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-              <button className="register-accept-btn" type="submit">Accept</button>
+              <input className="register-input" type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} />
+              <input className="register-input" type="password" placeholder="Confirmar contraseña" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+              <button className="register-accept-btn" type="submit">Aceptar</button>
             </form>
             <button className="register-google-btn" type="button">
               <img src={googleIcon} alt="Google" className="register-google-icon" />
-              Sign up with Google
+              Registrarse con Google
             </button>
             <div className="register-login-link">
-              Already have an account? <a href="/login">Sign in</a>
+              ¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a>
             </div>
           </div>
         </div>
