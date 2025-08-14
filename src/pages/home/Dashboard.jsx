@@ -2,7 +2,7 @@ import './styles/Dashboard.css';
 import agua from '../../assets/manos-agua.png'
 import tomando_agua from '../../assets/tomando-agua.png'
 import logo from '../../assets/logo.png'
-import how1 from '../../assets/1.jpg'
+import how1 from '../../assets/1.png'
 import how2 from '../../assets/2.png'
 import how3 from '../../assets/3.png'
 import regar from '../../assets/regando.png'
@@ -24,8 +24,8 @@ export default function Home() {
         </div>
         <nav>
           <a href="#" className="active">Inicio</a>
-          <a href="#nosotros">Nosotros</a>
-          <a href="#contacto">Contacto</a>
+          <a href="#">Nosotros</a>
+          <a href="#">Contacto</a>
         </nav>
         <div className="actions">
           <button className="btn login" onClick={() => navigate('/login')}>Inicia Sesión</button>
@@ -54,17 +54,17 @@ export default function Home() {
               <span className="highlight">agua</span><br />
               de calidad
             </h1>
-            <p>Por eso, nuestro objetivo es que cada gota cuente, asegurando un consumo eficiente que cuide tanto de tu bienestar como del planeta.</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
           </section>
 
           <div className="hero-image">
             <img src={tomando_agua} alt="Hombre tomando agua" />
           </div>
 
-          <section className="objective" id="nosotros">
+          <section className="objective">
             <div className="icon-title">
               <h2>
-                Nuestro objetivo en <span className="highlight">AquaWatch</span>
+                Objetivo de <span className="highlight">AquaWatch</span>
               </h2>
             </div>
             <p className="description">
@@ -103,8 +103,7 @@ export default function Home() {
         <div className="impacto-container">
           <h2 className="impacto-title">🌿 Impacto del Proyecto</h2>
           <p className="impacto-subtitle">
-            A través de un diagnóstico del entorno, se evidenció la ausencia de soluciones que brinden visibilidad en tiempo real del uso del recurso, lo que dificulta la adopción de prácticas sostenibles. 
-            El proyecto AquaWatch surge como respuesta directa a esta necesidad, con el objetivo general de crear un sistema de monitoreo hídrico inteligente que promueva el uso responsable del agua mediante el análisis de datos.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
           </p>
 
           <div className="impacto-grid">
@@ -152,9 +151,9 @@ export default function Home() {
             </div>
           </section>
 
-          <footer className="footer" id='contacto'>
+          <footer className="footer">
             <div className="footer-left">
-              <h2>AquaWatch</h2>
+              <h2>AquaBrym</h2>
               <p>Sistema de Monitoreo Inteligente del Agua</p>
             </div>
 
