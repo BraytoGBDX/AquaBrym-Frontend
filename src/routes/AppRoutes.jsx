@@ -1,34 +1,33 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import Login from '../pages/session/Login';
-import Home from '../pages/home/Dashboard'; 
-import AdminDashboard from '../pages/admin/Dashboard'; 
-import UserDashboard from '../pages/user/Dashboard'; 
-import Register from '../pages/session/Register';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import Login from "../pages/session/Login";
+import Home from "../pages/home/Dashboard";
+import AdminDashboard from "../pages/admin/Dashboard";
+import UserDashboard from "../pages/user/Dashboard";
+import Register from "../pages/session/Register";
+import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
-  // 🔹 Mantengo tu código pero ahora decodifico
   const tokenStr = localStorage.getItem("token");
   let token = null;
 
   if (tokenStr) {
     try {
-      // En vez de JSON.parse, usamos jwtDecode
       token = jwtDecode(tokenStr);
     } catch (error) {
-      console.error("Error al decodificar el token:", error);
+      console.error("Error al decodificar token:", error);
     }
   }
 
   return (
     <Routes>
-      {/* Ruta raíz: redirección según token */}
+      {/* Ruta raíz: redirige según token */}
       <Route
         path="/"
         element={
-          token?.tipo === "admin" ? (
+          token?.role === "admin" ? (
             <Navigate to="/admin" />
-          ) : token?.tipo === "user" ? (
+          ) : token?.role === "user" ? (
             <Navigate to="/user" />
           ) : (
             <Home />
@@ -36,11 +35,28 @@ function AppRoutes() {
         }
       />
 
+      {/* Públicas */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Home />} />
-      <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/user" element={<UserDashboard />} />
+
+      {/* Protegidas */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/user"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

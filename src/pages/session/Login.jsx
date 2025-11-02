@@ -12,7 +12,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async (tipo) => {
+  const handleLogin = async () => {
   try {
     const response = await fetch(`${url}/auth/login`, {
       method: 'POST',
