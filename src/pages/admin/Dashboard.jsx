@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserForm from "../../components/UserForm";
 import EntityForm from "../../components/EntityForm";
 import SensorForm from "../../components/SensorForm";
@@ -18,7 +18,6 @@ import {
 
 import logo from "../../assets/logo.png";
 
-
 const chartData = [
   { day: "Lun", anterior: 5187, actual: 6123 },
   { day: "Mar", anterior: 4321, actual: 4982 },
@@ -28,82 +27,6 @@ const chartData = [
   { day: "Sáb", anterior: 4902, actual: 5122 },
   { day: "Dom", anterior: 5031, actual: 5390 },
 ];
-
-const dataMap = {
-  Bills: [
-    {
-      id: 1,
-      period_start: "2025-07-01",
-      period_end: "2025-07-31",
-      consumption_m3: 123.45,
-      amount_due: 456.78,
-      status: "pending",
-    },
-    {
-      id: 2,
-      period_start: "2025-06-01",
-      period_end: "2025-06-30",
-      consumption_m3: 98.76,
-      amount_due: 389.5,
-      status: "paid",
-    },
-  ],
-  Entities: [
-    { id: 1, name: "Casa Pérez", address: "Calle 123", entity_type: "house" },
-    {
-      id: 2,
-      name: "Instituto ABC",
-      address: "Av. Central 456",
-      entity_type: "institution",
-    },
-  ],
-  Sensors: [
-    { id: 1, sensor_type: "Flujo", model: "FX-200", status: "active" },
-    { id: 2, sensor_type: "Presión", model: "PR-150", status: "inactive" },
-  ],
-  "Sensor Readings": [
-    {
-      id: 1,
-      timestamp: "2025-07-22 12:00",
-      volume_liters: 110.5,
-      flow_rate_lpm: 15.2,
-    },
-    {
-      id: 2,
-      timestamp: "2025-07-22 13:00",
-      volume_liters: 132.3,
-      flow_rate_lpm: 18.1,
-    },
-  ],
-  Users: [
-    {
-      id: 1,
-      email: "admin@email.com",
-      first_name: "Ana",
-      last_name: "Martínez",
-      role: "admin",
-    },
-    {
-      id: 2,
-      email: "user@email.com",
-      first_name: "Carlos",
-      last_name: "Gómez",
-      role: "user",
-    },
-  ],
-  Alertas: [
-    {
-      id: 1,
-      description: "Consumo inusual detectado",
-      timestamp: "2025-07-21 18:20",
-    },
-    {
-      id: 2,
-      description: "Sensor inactivo más de 24h",
-      timestamp: "2025-07-21 10:45",
-    },
-  ],
-};
 
 const columnsMap = {
   Bills: [
@@ -185,68 +108,67 @@ const columnsMap = {
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [showForm, setShowForm] = useState(false);
-  const [users, setUsers] = useState(dataMap.Users);
+  const [users, setUsers] = useState([]);
+  const [entities, setEntities] = useState([]);
+  const [sensors, setSensors] = useState([]);
+  const [readings, setReadings] = useState([]);
+  const [bills, setBills] = useState([]);
+  const [alerts, setAlerts] = useState([]);
 
-  const [entities, setEntities] = useState(dataMap.Entities);
   const [showEntityForm, setShowEntityForm] = useState(false);
-
-  const [sensors, setSensors] = useState(dataMap.Sensors);
   const [showSensorForm, setShowSensorForm] = useState(false);
   const [sensorToDelete, setSensorToDelete] = useState(null);
-
   const [sensorToEdit, setSensorToEdit] = useState(null);
-
   const [showAccountOptions, setShowAccountOptions] = useState(false);
-  const [sensorSettings, setSensorSettings] = useState({
-    activar: true,
-    exceso: true,
-    inactividad: true,
-  });
 
-  const toggleSensorSetting = (key) => {
-    setSensorSettings((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_URL}/users`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => res.json()).then(setUsers).catch(console.error);
+
+    fetch(`${API_URL}/entities`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => res.json()).then(setEntities).catch(console.error);
+
+    fetch(`${API_URL}/sensors`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => res.json()).then(setSensors).catch(console.error);
+
+    fetch(`${API_URL}/sensor-readings`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => res.json()).then(setReadings).catch(console.error);
+
+    fetch(`${API_URL}/bills`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => res.json()).then(setBills).catch(console.error);
+
+    fetch(`${API_URL}/alerts`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then(res => res.json()).then(setAlerts).catch(console.error);
+  }, []);
 
   function handleCreateUser(data) {
-    setUsers([
-      ...users,
-      {
-        id: users.length + 1,
-        email: data.email,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        role: data.role,
-      },
-    ]);
+    setUsers([...users, data]);
     setShowForm(false);
   }
 
   function handleCreateEntity(data) {
-    setEntities([
-      ...entities,
-      {
-        id: entities.length + 1,
-        name: data.name,
-        address: data.address,
-        entity_type: data.entity_type,
-      },
-    ]);
+    setEntities([...entities, data]);
     setShowEntityForm(false);
   }
 
   function handleCreateSensor(data) {
-    setSensors([
-      ...sensors,
-      {
-        id: sensors.length + 1,
-        sensor_type: data.sensor_type,
-        model: data.model,
-        status: data.status,
-      },
-    ]);
+    setSensors([...sensors, data]);
     setShowSensorForm(false);
   }
 
@@ -257,24 +179,34 @@ function AdminDashboard() {
 
   function handleSaveSensor(data) {
     if (sensorToEdit) {
-      // Editar: actualiza el sensor en el array
       setSensors(sensors.map((s) => (s.id === data.id ? data : s)));
     } else {
-      // Crear: agrega un nuevo sensor
-      setSensors([
-        ...sensors,
-        {
-          id:
-            sensors.length > 0 ? Math.max(...sensors.map((s) => s.id)) + 1 : 1,
-          sensor_type: data.sensor_type,
-          model: data.model,
-          status: data.status,
-        },
-      ]);
+      setSensors([...sensors, data]);
     }
     setShowSensorForm(false);
     setSensorToEdit(null);
   }
+
+  const dataMap = {
+    Bills: bills,
+    Entities: entities,
+    Sensors: sensors,
+    "Sensor Readings": readings,
+    Users: users,
+    Alertas: alerts,
+  };
+
+  const currentData = dataMap[activeSection] || [];
+  const totalPages = Math.ceil(currentData.length / itemsPerPage);
+  const paginatedData = currentData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeSection]);
+
 
   return (
     <div className="dashboard-container">
