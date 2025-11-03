@@ -126,7 +126,6 @@ function AdminDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {

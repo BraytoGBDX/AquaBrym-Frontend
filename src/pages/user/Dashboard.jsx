@@ -176,7 +176,6 @@ function AdminDashboard() {
                 className="logout-btn-yes"
                 onClick={() => {
                   setShowLogoutConfirm(false);
-                  alert("Sesión cerrada");
                   navigate("/dashboard");
                 }}
               >
