@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from "react";
+import Configuration from "../../components/Configuration";
+import Profile from "../../components/Profile";
 import UserForm from "../../components/UserForm";
 import EntityForm from "../../components/EntityForm";
 import SensorForm from "../../components/SensorForm";
 import "./styles/Dashboard.css";
 import Table from "../../components/Table";
 import { useNavigate } from 'react-router-dom';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
-
+import {BarChart, Bar, XAxis,YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,} from "recharts";
 import logo from "../../assets/logo.png";
 
 const chartData = [
@@ -119,7 +111,6 @@ function AdminDashboard() {
   const [showSensorForm, setShowSensorForm] = useState(false);
   const [sensorToDelete, setSensorToDelete] = useState(null);
   const [sensorToEdit, setSensorToEdit] = useState(null);
-  const [showAccountOptions, setShowAccountOptions] = useState(false);
 
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const navigate = useNavigate();
@@ -417,202 +408,9 @@ function AdminDashboard() {
                 )}
               </>
             ) : activeSection === "Configuración" ? (
-              <div className="config-section">
-                {!showAccountOptions ? (
-                  <>
-                    <h2>Configuración</h2>
-                    <ul className="config-list">
-                      <li
-                        className="config-option"
-                        onClick={() => setShowAccountOptions(true)}
-                      >
-                        Opciones de cuenta
-                      </li>
-                      <li
-                        className="config-option"
-                        onClick={() => setActiveSection("Profile")}
-                      >
-                        Activar/Desactivar Notificaciones
-                      </li>
-                      <li
-                        className="config-option"
-                        onClick={() => setShowAccountOptions(true)}
-                      >
-                        Cambiar Tema &nbsp;&nbsp;&nbsp;Oscuro/Claro
-                      </li>
-                      <li
-                        className="config-option"
-                        onClick={() => setShowAccountOptions(true)}
-                      >
-                        Ajustes de sonido y vibración
-                      </li>
-                      <li
-                        className="config-option"
-                        onClick={() => setShowAccountOptions(true)}
-                      >
-                        Actualizaciones y mantenimiento
-                      </li>
-                      <li
-                        className="config-option"
-                        onClick={() => setShowAccountOptions(true)}
-                      >
-                        Ayuda y soporte
-                      </li>
-                      <li
-                        className="config-option"
-                        onClick={() => setShowLogoutConfirm(true)}
-                      >
-                        Cerrar sesión
-                      </li>
-                    </ul>
-                  </>
-                ) : (
-                  <div className="account-options-grid">
-                    <div className="option-card">
-                      <h3>Sensores</h3>
-                      {["activar", "exceso", "inactividad"].map((key) => {
-                        const labels = {
-                          activar: "Activar sensores",
-                          exceso: "Exceso de consumo",
-                          inactividad: "Inactividad",
-                        };
-                        return (
-                          <div
-                            key={key}
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              marginBottom: "10px",
-                            }}
-                          >
-                            <span>{labels[key]}</span>
-                            <label className="switch">
-                              <input
-                                type="checkbox"
-                                checked={sensorSettings[key]}
-                                onChange={() => toggleSensorSetting(key)}
-                              />
-                              <span className="slider round"></span>
-                            </label>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="option-card centered">
-                      <div className="emoji">👤</div>
-                      <div style={{ fontWeight: "bold" }}>Administrador</div>
-                      <div>
-                        Rol
-                        <br />
-                        Administrador
-                      </div>
-                      <button>Cambiar contraseña</button>
-                    </div>
-
-                    <div className="option-card">
-                      <h3>Información de contacto</h3>
-                      <p>📧 aquaWatch@gmail.com</p>
-                      <p>📄 Documentación</p>
-                      <p>🎧 Soporte</p>
-                    </div>
-
-                    <div className="option-card">
-                      <h3>Información del proyecto</h3>
-                      <p>
-                        <strong>AquaWhatch</strong>
-                      </p>
-                      <p>
-                        Sistema de consumo consciente de agua y alertas en
-                        tiempo real.
-                      </p>
-                      <p>
-                        <strong>Versión:</strong> 1.2
-                      </p>
-                      <p>
-                        <strong>Sitio Web:</strong> 1
-                      </p>
-                      <p>
-                        <strong>Actualización:</strong> 3
-                      </p>
-                    </div>
-
-                    <div className="return-btn-container">
-                      <button onClick={() => setShowAccountOptions(false)}>
-                        Volver
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Configuration />
             ) : activeSection === "Profile" ? (
-              <div className="profile-modal">
-                <div className="profile-modal-content">
-                  <button
-                    onClick={() => setActiveSection("Dashboard")}
-                    className="close-btn"
-                  >
-                    Volver
-                  </button>
-
-                  <div className="profile-col">
-                    <div className="avatar">👤</div>
-                    <h3>AquaWatch</h3>
-                    <small>
-                      <strong>Administrador</strong>
-                    </small>
-                    <p>📧 aquaWhatch@gmail.com</p>
-                    <p>📞 +7461144910</p>
-                    <p>📞 +7641081079</p>
-                    <p>📷 aquaBrym.Whatch</p>
-                    <p>📘 aquaBrym.1</p>
-                  </div>
-
-                  <div className="profile-col">
-                    <div className="settings-icon">⚙️</div>
-                    <h3>Preferencias</h3>
-
-                    <div>
-                      <label>Idioma</label>
-                      <br />
-                      <select>
-                        <option>Español</option>
-                        <option>Inglés</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label>Tema</label>
-                      <br />
-                      <label>
-                        <input type="radio" name="tema" /> Claro
-                      </label>
-                      <label style={{ marginLeft: 20 }}>
-                        <input type="radio" name="tema" /> Oscuro
-                      </label>
-                    </div>
-
-                    <div>
-                      <label>Notificaciones</label>
-                      <br />
-                      <label className="switch">
-                        <input type="checkbox" />
-                        <span className="slider round"></span>
-                      </label>
-                    </div>
-
-                    <div>
-                      <label>Sonido de alerta</label>
-                      <br />
-                      <label className="switch">
-                        <input type="checkbox" />
-                        <span className="slider round"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Profile/>
             ) : (
               <Table
                 title={activeSection}
