@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Configuration from "../../components/Configuration";
 import Profile from "../../components/Profile";
 import UserForm from "../../components/UserForm";
@@ -9,6 +9,7 @@ import Table from "../../components/Table";
 import { useNavigate } from 'react-router-dom';
 import {BarChart, Bar, XAxis,YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,} from "recharts";
 import logo from "../../assets/logo.png";
+import { columnsMap } from "./ColumnsTable";
 
 const chartData = [
   { day: "Lun", anterior: 5187, actual: 6123 },
@@ -20,82 +21,6 @@ const chartData = [
   { day: "Dom", anterior: 5031, actual: 5390 },
 ];
 
-const columnsMap = {
-  Bills: [
-    { header: "ID", accessor: "id" },
-    {
-      header: "Periodo",
-      accessor: (row) => `${row.period_start} a ${row.period_end}`,
-    },
-    { header: "Consumo (m³)", accessor: "consumption_m3" },
-    { header: "Monto ($)", accessor: "amount_due" },
-    { header: "Estado", accessor: "status" },
-  ],
-  Entities: [
-    { header: "ID", accessor: "id" },
-    { header: "Nombre", accessor: "name" },
-    { header: "Dirección", accessor: "address" },
-    { header: "Tipo", accessor: "entity_type" },
-  ],
-  Sensors: [
-    { header: "ID", accessor: "id" },
-    { header: "Tipo", accessor: "sensor_type" },
-    { header: "Modelo", accessor: "model" },
-    { header: "Estado", accessor: "status" },
-    { header: "Entidad", accessor: "entityId" },
-    { header: "Creado", accessor: "created_at" },
-    { header: "Actualizado", accessor: "updated_at" },
-    {
-      header: "Acciones",
-      accessor: (row, { onEdit, onDelete }) => (
-        <div style={{ display: "flex", gap: 8 }}>
-          <button
-            onClick={() => onEdit(row)}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#2d5bff",
-              cursor: "pointer",
-            }}
-          >
-            Editar
-          </button>
-          <button
-            onClick={() => onDelete(row)}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#e74c3c",
-              cursor: "pointer",
-            }}
-          >
-            Eliminar
-          </button>
-        </div>
-      ),
-    },
-  ],
-  "Sensor Readings": [
-    { header: "ID", accessor: "id" },
-    { header: "Fecha", accessor: "timestamp" },
-    { header: "Volumen (L)", accessor: "volume_liters" },
-    { header: "Flujo (LPM)", accessor: "flow_rate_lpm" },
-  ],
-  Users: [
-    { header: "ID", accessor: "id" },
-    { header: "Email", accessor: "email" },
-    {
-      header: "Nombre",
-      accessor: (row) => `${row.first_name} ${row.last_name}`,
-    },
-    { header: "Rol", accessor: "role" },
-  ],
-  Alertas: [
-    { header: "ID", accessor: "id" },
-    { header: "Descripción", accessor: "description" },
-    { header: "Fecha", accessor: "timestamp" },
-  ],
-};
 
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("Dashboard");
@@ -147,36 +72,6 @@ function AdminDashboard() {
     }).then(res => res.json()).then(setAlerts).catch(console.error);
   }, []);
 
-  function handleCreateUser(data) {
-    setUsers([...users, data]);
-    setShowForm(false);
-  }
-
-  function handleCreateEntity(data) {
-    setEntities([...entities, data]);
-    setShowEntityForm(false);
-  }
-
-  function handleCreateSensor(data) {
-    setSensors([...sensors, data]);
-    setShowSensorForm(false);
-  }
-
-  function handleDeleteSensorConfirmed() {
-    setSensors(sensors.filter((s) => s.id !== sensorToDelete.id));
-    setSensorToDelete(null);
-  }
-
-  function handleSaveSensor(data) {
-    if (sensorToEdit) {
-      setSensors(sensors.map((s) => (s.id === data.id ? data : s)));
-    } else {
-      setSensors([...sensors, data]);
-    }
-    setShowSensorForm(false);
-    setSensorToEdit(null);
-  }
-
   const dataMap = {
     Bills: bills,
     Entities: entities,
@@ -193,10 +88,21 @@ function AdminDashboard() {
     currentPage * itemsPerPage
   );
 
+const handleNextPage = () => {
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
+
+const handlePrevPage = () => {
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
   useEffect(() => {
     setCurrentPage(1);
   }, [activeSection]);
-
 
   return (
     <div className="dashboard-container">
@@ -300,6 +206,49 @@ function AdminDashboard() {
                   semanas.
                 </div>
               </>
+            ) : activeSection === "Bills" ? (
+              <>
+                <div className="header-actions-row">
+                  <h2>Entidades</h2>
+                  <button
+                    className="btn btn-blue"
+                    onClick={() => setShowEntityForm(true)}
+                  >
+                    Crear Entidad
+                  </button>
+                </div>
+                <Table
+                  title={activeSection}
+                  columns={columnsMap[activeSection]}
+                  data={paginatedData}
+                />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
+                {showEntityForm && (
+                  <div className="modal-eliminar-overlay">
+                    <div className="modal-eliminar-content">
+                      <EntityForm onSubmit={handleCreateEntity} />
+                      <button
+                        className="btn"
+                        onClick={() => setShowEntityForm(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
             ) : activeSection === "Entities" ? (
               <>
                 <div className="header-actions-row">
@@ -314,8 +263,21 @@ function AdminDashboard() {
                 <Table
                   title={activeSection}
                   columns={columnsMap[activeSection]}
-                  data={entities}
+                  data={paginatedData}
                 />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
                 {showEntityForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
@@ -344,7 +306,7 @@ function AdminDashboard() {
                 <Table
                   title={activeSection}
                   columns={columnsMap[activeSection]}
-                  data={sensors}
+                  data={paginatedData}
                   actions={{
                     onEdit: (row) => {
                       setSensorToEdit(row);
@@ -353,6 +315,19 @@ function AdminDashboard() {
                     onDelete: (row) => setSensorToDelete(row),
                   }}
                 />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
                 {showSensorForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
@@ -377,7 +352,50 @@ function AdminDashboard() {
                   </div>
                 )}
               </>
-            ) : activeSection === "Users" ? (
+            ): activeSection === "Sensor Readings" ? (
+              <>
+                <div className="header-actions-row">
+                  <h2>Entidades</h2>
+                  <button
+                    className="btn btn-blue"
+                    onClick={() => setShowEntityForm(true)}
+                  >
+                    Crear Entidad
+                  </button>
+                </div>
+                <Table
+                  title={activeSection}
+                  columns={columnsMap[activeSection]}
+                  data={paginatedData}
+                />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
+                {showEntityForm && (
+                  <div className="modal-eliminar-overlay">
+                    <div className="modal-eliminar-content">
+                      <EntityForm onSubmit={handleCreateEntity} />
+                      <button
+                        className="btn"
+                        onClick={() => setShowEntityForm(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+              ) : activeSection === "Users" ? (
               <>
                 <div className="header-actions-row">
                   <h2>Usuarios</h2>
@@ -391,8 +409,21 @@ function AdminDashboard() {
                 <Table
                   title={activeSection}
                   columns={columnsMap[activeSection]}
-                  data={users}
+                  data={paginatedData}
                 />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
                 {showForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
@@ -400,6 +431,49 @@ function AdminDashboard() {
                       <button
                         className="btn"
                         onClick={() => setShowForm(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            ): activeSection === "Alertas" ? (
+              <>
+                <div className="header-actions-row">
+                  <h2>Entidades</h2>
+                  <button
+                    className="btn btn-blue"
+                    onClick={() => setShowEntityForm(true)}
+                  >
+                    Crear Entidad
+                  </button>
+                </div>
+                <Table
+                  title={activeSection}
+                  columns={columnsMap[activeSection]}
+                  data={paginatedData}
+                />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
+                {showEntityForm && (
+                  <div className="modal-eliminar-overlay">
+                    <div className="modal-eliminar-content">
+                      <EntityForm onSubmit={handleCreateEntity} />
+                      <button
+                        className="btn"
+                        onClick={() => setShowEntityForm(false)}
                       >
                         Cancelar
                       </button>
