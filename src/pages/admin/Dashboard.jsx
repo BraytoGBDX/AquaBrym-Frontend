@@ -452,7 +452,12 @@ const handlePrevPage = () => {
                 <Table
                   title={activeSection}
                   columns={columnsMap[activeSection]}
-                  data={paginatedData}
+                  data={paginatedData.map(item => ({
+                      ...item,
+                      extra_data: item.extra_data ? item.extra_data.flow_rate : "",
+                      resolved: item.resolved ? "Resuelto" : "Pendiente",
+                      sensor: item.sensor ? item.sensor.id : ""
+                    }))}
                 />
                 <div className="pagination">
                   <button
