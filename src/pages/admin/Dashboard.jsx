@@ -88,17 +88,17 @@ function AdminDashboard() {
     currentPage * itemsPerPage
   );
 
-const handleNextPage = () => {
-  if (currentPage < totalPages) {
-    setCurrentPage(currentPage + 1);
-  }
-};
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-const handlePrevPage = () => {
-  if (currentPage > 1) {
-    setCurrentPage(currentPage - 1);
-  }
-};
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   useEffect(() => {
     setCurrentPage(1);
@@ -217,11 +217,7 @@ const handlePrevPage = () => {
                     Crear Entidad
                   </button>
                 </div>
-                <Table
-                  title={activeSection}
-                  columns={columnsMap[activeSection]}
-                  data={paginatedData}
-                />
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData}/>
                 <div className="pagination">
                   <button
                     onClick={handlePrevPage}

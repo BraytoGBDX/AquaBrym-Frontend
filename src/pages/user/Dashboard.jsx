@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
-import UserForm from '../../components/UserForm';
-import EntityForm from '../../components/EntityForm';
-import SensorForm from '../../components/SensorForm';
+import React, { useState, useEffect } from 'react';
 import './styles/DashboardUser.css';
+import {columnsMap} from './ColumnsMap.jsx'
 import Table from '../../components/Table';
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend
-} from 'recharts';
-
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend} from 'recharts';
 import logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import Configuration from '../../components/Configuration';
@@ -24,103 +18,74 @@ const chartData = [
   { day: 'Dom', anterior: 5031, actual: 5390 },
 ];
 
-const columnsMap = {
-Bills: [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Periodo', accessor: row => `${row.period_start} a ${row.period_end}` },
-  { header: 'Consumo (m³)', accessor: 'consumption_m3' },
-  { header: 'Tarifa por m³', accessor: 'rate_per_m3' },
-  { header: 'Cargo fijo', accessor: 'fixed_charge' },
-  { header: 'Monto ($)', accessor: 'amount_due' },
-  { header: 'Emitido', accessor: 'issued_at' },
-  { header: 'Vence', accessor: 'due_date' },
-  { header: 'Estado', accessor: 'status' },
-  { header: 'Entidad ID', accessor: 'entityId' },
-  { header: 'Creado', accessor: 'created_at' },
-  { header: 'Actualizado', accessor: 'updated_at' }
-],
-Entities: [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Nombre', accessor: 'name' },
-  { header: 'Dirección', accessor: 'address' },
-  { header: 'Tipo', accessor: 'entity_type' },
-  { header: 'Usuario', accessor: 'userId' },
-  { header: 'Creado', accessor: 'created_at' },
-  { header: 'Actualizado', accessor: 'updated_at' }
-],
-Sensors: [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Tipo', accessor: 'sensor_type' },
-  { header: 'Modelo', accessor: 'model' },
-  { header: 'Instalación', accessor: 'installation_at' },
-  { header: 'Estado', accessor: 'status' },
-  { header: 'Entidad', accessor: 'entityId' },
-  { header: 'Creado', accessor: 'created_at' },
-  { header: 'Actualizado', accessor: 'updated_at' }
-],
-'Sensor Readings': [
-  { header: 'ID', accessor: 'id' },
-  { header: 'Fecha', accessor: 'timestamp' },
-  { header: 'Pulsos', accessor: 'pulses' },
-  { header: 'Flujo (LPM)', accessor: 'flow_rate_lpm' },
-  { header: 'Volumen (L)', accessor: 'volume_liters' },
-  { header: 'Sensor ID', accessor: 'sensorId' },
-  { header: 'Creado', accessor: 'created_at' }
-],
-  Alertas: [
-    { header: 'ID', accessor: 'id' },
-    { header: 'Descripción', accessor: 'description' },
-    { header: 'Fecha', accessor: 'timestamp' }
-  ]
-};
-
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState('Dashboard');
   const [showForm, setShowForm] = useState(false);
-  const [entities, setEntities] = useState(dataMap.Entities);
+  const [entities, setEntities] = useState([]);
+  const [sensors, setSensors] = useState([]);
+  const [bills, setBills] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [readings, setReadings] = useState([]);
+
   const [showEntityForm, setShowEntityForm] = useState(false);
-  const [sensors, setSensors] = useState(dataMap.Sensors);
   const [showSensorForm, setShowSensorForm] = useState(false);
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const API_URL = import.meta.env.VITE_API_URL;
 
-  const navigate = useNavigate(); // para redireccionar a Home
 
-  const [showAccountOptions, setShowAccountOptions] = useState(false);
-    const [sensorSettings, setSensorSettings] = useState({
-      activar: true,
-      exceso: true,
-      inactividad: true,
-    });
+  const dataMap = {
+    Bills: bills,
+    Entities: entities,
+    Sensors: sensors,
+    "Sensor Readings": readings,
+    Alertas: alerts,
+  };
+
+
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      fetch(`${API_URL}/entities`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then(res => res.json()).then(setEntities).catch(console.error);
   
-    const toggleSensorSetting = (key) => {
-      setSensorSettings((prev) => ({ ...prev, [key]: !prev[key] }));
-    };
-    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+      fetch(`${API_URL}/sensors`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then(res => res.json()).then(setSensors).catch(console.error);
+  
+      fetch(`${API_URL}/sensor-readings`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then(res => res.json()).then(setReadings).catch(console.error);
+  
+      fetch(`${API_URL}/bills`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then(res => res.json()).then(setBills).catch(console.error);
+  
+      fetch(`${API_URL}/alerts`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then(res => res.json()).then(setAlerts).catch(console.error);
+    }, []);
 
-  function handleCreateEntity(data) {
-    setEntities([
-      ...entities,
-      {
-        id: entities.length + 1,
-        name: data.name,
-        address: data.address,
-        entity_type: data.entity_type
-      }
-    ]);
-    setShowEntityForm(false);
-  }
+  const currentData = dataMap[activeSection] || [];
+  const totalPages = Math.ceil(currentData.length / itemsPerPage);
+  const paginatedData = currentData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-  function handleCreateSensor(data) {
-    setSensors([
-      ...sensors,
-      {
-        id: sensors.length + 1,
-        sensor_type: data.sensor_type,
-        model: data.model,
-        status: data.status
-      }
-    ]);
-    setShowSensorForm(false);
-  }
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -203,7 +168,20 @@ function AdminDashboard() {
                     Crear Entidad
                   </button>
                 </div>
-                <Table title={activeSection} columns={columnsMap[activeSection]} data={entities} />
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData} />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
                 {showEntityForm && (
                   <div className="modal-overlay">
                     <div className="modal-content">
@@ -215,7 +193,113 @@ function AdminDashboard() {
                   </div>
                 )}
               </>
-            ) : activeSection === 'Sensors' ? (
+            ): activeSection === 'Alertas' ? (
+              <>
+                <div className="header-actions-row">
+                  <h2>Alertas</h2>
+                  <button className="btn btn-blue" onClick={() => setShowSensorForm(true)}>
+                    Crear Sensor
+                  </button>
+                </div>
+                <Table title={activeSection} columns={columnsMap[activeSection]} 
+                data={paginatedData.map(item => ({
+                    ...item,
+                    extra_data: item.extra_data ? item.extra_data.flow_rate : "",
+                    resolved: item.resolved ? "Resuelto" : "Pendiente",
+                    sensor: item.sensor ? item.sensor.id : ""
+                  }))}
+                />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
+                {showSensorForm && (
+                  <div className="modal-overlay">
+                    <div className="modal-content">
+                      <SensorForm onSubmit={handleCreateSensor} />
+                      <button className="btn btn-cancel" onClick={() => setShowSensorForm(false)}>
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )  : activeSection === 'Sensor Readings' ? (
+              <>
+                <div className="header-actions-row">
+                  <h2>Sensor Readings</h2>
+                  <button className="btn btn-blue" onClick={() => setShowSensorForm(true)}>
+                    Crear Sensor
+                  </button>
+                </div>
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData} />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
+                {showSensorForm && (
+                  <div className="modal-overlay">
+                    <div className="modal-content">
+                      <SensorForm onSubmit={handleCreateSensor} />
+                      <button className="btn btn-cancel" onClick={() => setShowSensorForm(false)}>
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : activeSection === 'Bills' ? (
+              <>
+                <div className="header-actions-row">
+                  <h2>Facturas</h2>
+                  <button className="btn btn-blue" onClick={() => setShowSensorForm(true)}>
+                    Crear Sensor
+                  </button>
+                </div>
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData} />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
+                {showSensorForm && (
+                  <div className="modal-overlay">
+                    <div className="modal-content">
+                      <SensorForm onSubmit={handleCreateSensor} />
+                      <button className="btn btn-cancel" onClick={() => setShowSensorForm(false)}>
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )  : activeSection === 'Sensors' ? (
               <>
                 <div className="header-actions-row">
                   <h2>Sensores</h2>
@@ -223,7 +307,20 @@ function AdminDashboard() {
                     Crear Sensor
                   </button>
                 </div>
-                <Table title={activeSection} columns={columnsMap[activeSection]} data={sensors} />
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData} />
+                <div className="pagination">
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                  >Anterior
+                  </button>
+                  <span>Página {currentPage} de {totalPages}</span>
+                    <button
+                      onClick={handleNextPage}
+                      disabled={currentPage === totalPages}
+                    >Siguiente
+                    </button>
+                  </div>
                 {showSensorForm && (
                   <div className="modal-overlay">
                     <div className="modal-content">

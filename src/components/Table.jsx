@@ -1,4 +1,3 @@
-import React from 'react';
 import './styles/Table.css';
 
 const Table = ({ columns, data, title, actions }) => { // <--- agrega actions aquí
