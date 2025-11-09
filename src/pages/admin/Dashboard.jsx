@@ -21,7 +21,6 @@ const chartData = [
   { day: "Dom", anterior: 5031, actual: 5390 },
 ];
 
-
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [showForm, setShowForm] = useState(false);
@@ -31,12 +30,10 @@ function AdminDashboard() {
   const [readings, setReadings] = useState([]);
   const [bills, setBills] = useState([]);
   const [alerts, setAlerts] = useState([]);
-
   const [showEntityForm, setShowEntityForm] = useState(false);
   const [showSensorForm, setShowSensorForm] = useState(false);
   const [sensorToDelete, setSensorToDelete] = useState(null);
   const [sensorToEdit, setSensorToEdit] = useState(null);
-
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -111,22 +108,8 @@ function AdminDashboard() {
           <img src={logo} alt="Logo" className="logo" />
         </div>
         <div className="menu">
-          {[
-            "Dashboard",
-            "Bills",
-            "Entities",
-            "Sensors",
-            "Sensor Readings",
-            "Users",
-            "Alertas",
-            "Configuración",
-          ].map((item) => (
-            <div
-              key={item}
-              className={`menu-item ${activeSection === item ? "active" : ""}`}
-              onClick={() => setActiveSection(item)}
-            >
-              {item}
+          {["Dashboard","Bills","Entities","Sensors","Sensor Readings","Users","Alertas","Configuración",].map((item) => (
+            <div key={item} className={`menu-item ${activeSection === item ? "active" : ""}`} onClick={() => setActiveSection(item)}>{item}
             </div>
           ))}
         </div>
@@ -136,22 +119,8 @@ function AdminDashboard() {
           <div className="logout-confirm-box">
             <h3>¿Seguro que deseas cerrar sesión?</h3>
             <div className="logout-confirm-actions">
-              <button
-                className="logout-btn-yes"
-                onClick={() => {
-                  setShowLogoutConfirm(false);
-                  alert("Sesión cerrada");
-                  navigate("/dashboard");
-                }}
-              >
-                ✔
-              </button>
-              <button
-                className="logout-btn-no"
-                onClick={() => setShowLogoutConfirm(false)}
-              >
-                ✖
-              </button>
+              <button className="logout-btn-yes" onClick={() => {setShowLogoutConfirm(false); navigate("/dashboard");}}>✔</button>
+              <button className="logout-btn-no" onClick={() => setShowLogoutConfirm(false)}>✖</button>
             </div>
           </div>
         </div>
@@ -160,19 +129,10 @@ function AdminDashboard() {
         <div className="topbar">
           <div className="top-links">
             <div className="top-link">Configuración</div>
-            <div
-              className="top-link"
-              onClick={() => setActiveSection("Profile")}
-            >
-              Perfil
+            <div className="top-link" onClick={() => setActiveSection("Profile")}>Perfil
             </div>
-            <div
-        className="logout-btn"
-        onClick={() => setShowLogoutConfirm(true)}
-        style={{ cursor: "pointer" }}
-      >
-        Salir
-      </div>
+            <div className="logout-btn" onClick={() => setShowLogoutConfirm(true)} style={{ cursor: "pointer" }}>Salir
+            </div>
           </div>
           <div className="search-bar">
             <input type="text" placeholder="Buscar" />
@@ -184,63 +144,36 @@ function AdminDashboard() {
             {activeSection === "Dashboard" ? (
               <>
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart
-                    data={chartData}
-                    margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-                  >
+                  <BarChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="day" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar
-                      dataKey="anterior"
-                      fill="#82ca9d"
-                      name="Semana anterior"
-                    />
+                    <Bar dataKey="anterior" fill="#82ca9d" name="Semana anterior"/>
                     <Bar dataKey="actual" fill="#2d5bff" name="Semana actual" />
                   </BarChart>
                 </ResponsiveContainer>
-                <div className="chart-description">
-                  Gráfico de barras que muestra el consumo comparado entre
-                  semanas.
+                <div className="chart-description">Gráfico de barras que muestra el consumo comparado entresemanas.
                 </div>
               </>
             ) : activeSection === "Bills" ? (
               <>
                 <div className="header-actions-row">
                   <h2>Entidades</h2>
-                  <button
-                    className="btn btn-blue"
-                    onClick={() => setShowEntityForm(true)}
-                  >
-                    Crear Entidad
-                  </button>
+                  <button className="btn btn-blue" onClick={() => setShowEntityForm(true)}>Crear Entidad</button>
                 </div>
                 <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData}/>
                 <div className="pagination">
-                  <button
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                  >Anterior
-                  </button>
+                  <button onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
                   <span>Página {currentPage} de {totalPages}</span>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={currentPage === totalPages}
-                    >Siguiente
-                    </button>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>
                   </div>
                 {showEntityForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
                       <EntityForm onSubmit={handleCreateEntity} />
-                      <button
-                        className="btn"
-                        onClick={() => setShowEntityForm(false)}
-                      >
-                        Cancelar
-                      </button>
+                      <button className="btn" onClick={() => setShowEntityForm(false)}>Cancelar</button>
                     </div>
                   </div>
                 )}
@@ -249,41 +182,19 @@ function AdminDashboard() {
               <>
                 <div className="header-actions-row">
                   <h2>Entidades</h2>
-                  <button
-                    className="btn btn-blue"
-                    onClick={() => setShowEntityForm(true)}
-                  >
-                    Crear Entidad
-                  </button>
+                  <button className="btn btn-blue" onClick={() => setShowEntityForm(true)}>Crear Entidad</button>
                 </div>
-                <Table
-                  title={activeSection}
-                  columns={columnsMap[activeSection]}
-                  data={paginatedData}
-                />
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData}/>
                 <div className="pagination">
-                  <button
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                  >Anterior
-                  </button>
+                  <button onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
                   <span>Página {currentPage} de {totalPages}</span>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={currentPage === totalPages}
-                    >Siguiente
-                    </button>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>
                   </div>
                 {showEntityForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
                       <EntityForm onSubmit={handleCreateEntity} />
-                      <button
-                        className="btn"
-                        onClick={() => setShowEntityForm(false)}
-                      >
-                        Cancelar
-                      </button>
+                      <button className="btn" onClick={() => setShowEntityForm(false)}>Cancelar</button>
                     </div>
                   </div>
                 )}
@@ -292,58 +203,22 @@ function AdminDashboard() {
               <>
                 <div className="header-actions-row">
                   <h2>Sensores</h2>
-                  <button
-                    className="btn btn-blue"
-                    onClick={() => setShowSensorForm(true)}
-                  >
-                    Crear Sensor
-                  </button>
+                  <button className="btn btn-blue" onClick={() => setShowSensorForm(true)}>Crear Sensor</button>
                 </div>
-                <Table
-                  title={activeSection}
-                  columns={columnsMap[activeSection]}
-                  data={paginatedData}
-                  actions={{
-                    onEdit: (row) => {
-                      setSensorToEdit(row);
-                      setShowSensorForm(true);
-                    },
-                    onDelete: (row) => setSensorToDelete(row),
-                  }}
-                />
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData}
+                actions={{
+                    onEdit: (row) => {setSensorToEdit(row);setShowSensorForm(true);},onDelete: (row) => setSensorToDelete(row),
+                  }}/>
                 <div className="pagination">
-                  <button
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                  >Anterior
-                  </button>
+                  <button onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
                   <span>Página {currentPage} de {totalPages}</span>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={currentPage === totalPages}
-                    >Siguiente
-                    </button>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>
                   </div>
                 {showSensorForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
-                      <SensorForm
-                        sensor={sensorToEdit}
-                        onClose={() => {
-                          setShowSensorForm(false);
-                          setSensorToEdit(null);
-                        }}
-                        onSubmit={handleSaveSensor}
-                      />
-                      <button
-                        className="btn"
-                        onClick={() => {
-                          setShowSensorForm(false);
-                          setSensorToEdit(null);
-                        }}
-                      >
-                        Cancelar
-                      </button>
+                      <SensorForm sensor={sensorToEdit}onClose={() => {setShowSensorForm(false);setSensorToEdit(null);}}onSubmit={handleSaveSensor}/>
+                      <button className="btn" onClick={() => {setShowSensorForm(false);setSensorToEdit(null);}}>Cancelar</button>
                     </div>
                   </div>
                 )}
@@ -352,41 +227,19 @@ function AdminDashboard() {
               <>
                 <div className="header-actions-row">
                   <h2>Entidades</h2>
-                  <button
-                    className="btn btn-blue"
-                    onClick={() => setShowEntityForm(true)}
-                  >
-                    Crear Entidad
-                  </button>
+                  <button className="btn btn-blue" onClick={() => setShowEntityForm(true)}>Crear Entidad</button>
                 </div>
-                <Table
-                  title={activeSection}
-                  columns={columnsMap[activeSection]}
-                  data={paginatedData}
-                />
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData}/>
                 <div className="pagination">
-                  <button
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                  >Anterior
-                  </button>
+                  <button onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
                   <span>Página {currentPage} de {totalPages}</span>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={currentPage === totalPages}
-                    >Siguiente
-                    </button>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>
                   </div>
                 {showEntityForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
                       <EntityForm onSubmit={handleCreateEntity} />
-                      <button
-                        className="btn"
-                        onClick={() => setShowEntityForm(false)}
-                      >
-                        Cancelar
-                      </button>
+                      <button className="btn" onClick={() => setShowEntityForm(false)}>Cancelar</button>
                     </div>
                   </div>
                 )}
@@ -395,41 +248,19 @@ function AdminDashboard() {
               <>
                 <div className="header-actions-row">
                   <h2>Usuarios</h2>
-                  <button
-                    className="btn btn-blue"
-                    onClick={() => setShowForm(true)}
-                  >
-                    Crear Usuario
-                  </button>
+                  <button className="btn btn-blue" onClick={() => setShowForm(true)}>Crear Usuario</button>
                 </div>
-                <Table
-                  title={activeSection}
-                  columns={columnsMap[activeSection]}
-                  data={paginatedData}
-                />
+                <Table title={activeSection} columns={columnsMap[activeSection]} data={paginatedData}/>
                 <div className="pagination">
-                  <button
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                  >Anterior
-                  </button>
+                  <button onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
                   <span>Página {currentPage} de {totalPages}</span>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={currentPage === totalPages}
-                    >Siguiente
-                    </button>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>
                   </div>
                 {showForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
                       <UserForm onSubmit={handleCreateUser} />
-                      <button
-                        className="btn"
-                        onClick={() => setShowForm(false)}
-                      >
-                        Cancelar
-                      </button>
+                      <button className="btn" onClick={() => setShowForm(false)}>Cancelar</button>
                     </div>
                   </div>
                 )}
@@ -438,46 +269,25 @@ function AdminDashboard() {
               <>
                 <div className="header-actions-row">
                   <h2>Entidades</h2>
-                  <button
-                    className="btn btn-blue"
-                    onClick={() => setShowEntityForm(true)}
-                  >
-                    Crear Entidad
-                  </button>
+                  <button className="btn btn-blue" onClick={() => setShowEntityForm(true)}>Crear Entidad</button>
                 </div>
-                <Table
-                  title={activeSection}
-                  columns={columnsMap[activeSection]}
-                  data={paginatedData.map(item => ({
-                      ...item,
-                      extra_data: item.extra_data ? item.extra_data.flow_rate : "",
-                      resolved: item.resolved ? "Resuelto" : "Pendiente",
-                      sensor: item.sensor ? item.sensor.id : ""
-                    }))}
+                <Table title={activeSection} columns={columnsMap[activeSection]}data={paginatedData.map(item => ({
+                  ...item,
+                  extra_data: item.extra_data ? item.extra_data.flow_rate : "",
+                  resolved: item.resolved ? "Resuelto" : "Pendiente",
+                  sensor: item.sensor ? item.sensor.id : ""
+                }))}
                 />
                 <div className="pagination">
-                  <button
-                    onClick={handlePrevPage}
-                    disabled={currentPage === 1}
-                  >Anterior
-                  </button>
+                  <button onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
                   <span>Página {currentPage} de {totalPages}</span>
-                    <button
-                      onClick={handleNextPage}
-                      disabled={currentPage === totalPages}
-                    >Siguiente
-                    </button>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>
                   </div>
                 {showEntityForm && (
                   <div className="modal-eliminar-overlay">
                     <div className="modal-eliminar-content">
                       <EntityForm onSubmit={handleCreateEntity} />
-                      <button
-                        className="btn"
-                        onClick={() => setShowEntityForm(false)}
-                      >
-                        Cancelar
-                      </button>
+                      <button className="btn" onClick={() => setShowEntityForm(false)}>Cancelar</button>
                     </div>
                   </div>
                 )}
@@ -487,11 +297,7 @@ function AdminDashboard() {
             ) : activeSection === "Profile" ? (
               <Profile/>
             ) : (
-              <Table
-                title={activeSection}
-                columns={columnsMap[activeSection]}
-                data={dataMap[activeSection]}
-              />
+              <Table title={activeSection} columns={columnsMap[activeSection]} data={dataMap[activeSection]}/>
             )}
           </div>
 
@@ -517,18 +323,8 @@ function AdminDashboard() {
           <div className="modal-eliminar-content">
             <h2 className="modal-eliminar-title">ELIMINAR</h2>
             <div className="modal-eliminar-actions">
-              <button
-                className="modal-eliminar-btn modal-eliminar-btn-yes"
-                onClick={handleDeleteSensorConfirmed}
-              >
-                ✔
-              </button>
-              <button
-                className="modal-eliminar-btn modal-eliminar-btn-no"
-                onClick={() => setSensorToDelete(null)}
-              >
-                ✖
-              </button>
+              <button className="modal-eliminar-btn modal-eliminar-btn-yes" onClick={handleDeleteSensorConfirmed}>✔</button>
+              <button className="modal-eliminar-btn modal-eliminar-btn-no" onClick={() => setSensorToDelete(null)}>✖</button>
             </div>
           </div>
         </div>
