@@ -1,0 +1,36 @@
+{
+  "name": "Aqueawatch",
+  "short_name": "AquaWatch",
+  "description": "Una aplicación web progresiva hecha con React",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+
+  "icons": [
+    {
+      "src": "/1.jpg",
+      "sizes": "450x450",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/cerro.png",
+      "sizes": "703x341",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "/220606.png",
+      "sizes": "1300x731"
+    },
+    {
+      "src": "/fondo.jpg",
+      "sizes": "739x1600",
+      "form_factor": "wide"
+    }
+  ]
+}
